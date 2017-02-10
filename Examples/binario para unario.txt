@@ -1,0 +1,16 @@
+; This program converts a binary number into unary using
+; one tape for input and one tape for output
+; It serves to show how much simpler and faster it is
+; to use multiple tapes to achieve the same task
+; First, we seek to the end of the input
+q0 _* _* l* q1
+q0 0* 0* r* q0
+q0 1* 1* r* q0
+q0 ** ** ** halt-reject
+
+; We decrement the input number and add 1 to
+; the output number, then we restart the process from
+; state q0
+q1 _* _* ** halt-accept
+q1 1_ 01 rr q0
+q1 0* 1* l* q1

@@ -1,0 +1,26 @@
+q0 __ __ ** halt-reject
+q0 #_ #_ r* q0
+q0 #_ #_ r* q1
+q0 0_ 0_ r* q0
+q0 1_ 1_ r* q0
+
+q1 __ __ ** halt-reject
+q1 0_ 00 rr q1
+q1 1_ 11 rr q1
+q1 #_ #_ ** q2
+
+q2 __ __ ** halt-reject
+q2 #_ #_ *l q3
+q2 #_ #_ r* q2
+q2 1_ 1_ r* q2
+q2 0_ 0_ r* q2
+
+q3 *_ ** rr q4
+q3 *0 *0 *l q3
+q3 *1 *1 *l q3
+
+q4 #_ #_ ** halt-accept
+q4 __ __ ** halt-accept
+q4 11 11 rr q4
+q4 00 00 rr q4
+q4 ** ** ** halt-reject

@@ -1,0 +1,20 @@
+; This non-deterministic Turing Machine accepts all binary words that contain
+; 3 consecutive 1's
+
+; First, it cycles through the word.
+; If it encounters a 1, it might transition
+; into the next state, or just keep cycling
+
+q0 0 0 r q0
+q0 1 1 r q0
+q0 1 1 r q1
+q0 _ _ * halt-reject
+
+; From here on out, it must read the two remaining 1's
+q1 1 1 r q2
+q1 0 0 r halt-reject
+q1 _ _ * halt-reject
+
+q2 1 1 r halt-accept
+q2 0 0 r halt-reject
+q2 _ _ * halt-reject
