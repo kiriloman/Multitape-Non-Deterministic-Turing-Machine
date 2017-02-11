@@ -25,5 +25,14 @@ How to install on mac
 How to install on Windows
 ```
 
+### Usage
+To open the simulator use 
+
+```
+java -jar "name of .jar"
+```
+
 ### Syntax
 Syntax inspired by [Anthony Morphett](http://morphett.info/turing/turing.html).
+
+
