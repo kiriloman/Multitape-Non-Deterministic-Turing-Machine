@@ -1,3 +1,9 @@
+; This machine will accept a word of the type
+; #W1#W2#...#Wn, where Wi is a binary word, if
+; there are an i and j such that i != j and
+; Wi = Wj
+; It uses two tapes for this purpose
+
 q0 __ __ ** halt-reject
 q0 #_ #_ r* q0
 q0 #_ #_ r* q1
