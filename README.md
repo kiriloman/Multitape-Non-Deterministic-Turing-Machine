@@ -56,12 +56,12 @@ When opened the simulator shows a GUI where you will be working.
 2. Program;
 3. Controls:
 
-* **Steps**: how many transitions have been executed until current moment;
-* **Run**: executes the program;
-* **Run at full speed**: runs as fast as your computer allows;
-* **Step**: executes one transition;
-* **Pause/Resume**: pauses/resumes the execution;
-* **Set**: initiates the tapes and machine.
+ 1. **Steps**: how many transitions have been executed until current moment;
+ 2. **Run**: executes the program;
+ 3. **Run at full speed**: runs as fast as your computer allows;
+ 4. **Step**: executes one transition;
+ 5. **Pause/Resume**: pauses/resumes the execution;
+ 6. **Set**: initiates the tapes and machine.
 
 4. Tapes. One in each line;
 5. Pre-execution controls
