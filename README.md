@@ -40,4 +40,4 @@ Any program must follow the structure:
  ```
  <current state> <character read> <character written> <direction to move> <state to transition into>
  ```
-Use ```_``` to represent spaces, and ```*``` instead of a character read to mean any character, or instead of a character written/direction to mean no change. Refer to the example programs provided with the source to clarify.
+Use ```_``` to represent spaces, and ```*``` instead of a character read to mean any character, or instead of a character written/direction to mean no change. Refer to ```Examples``` folder to clarify.
