@@ -1,5 +1,5 @@
 # Multitape Non Deterministic Turing Machine Simulator
-An accept-state seeking multitape non deterministic Turing machine simulator allows you to write and execute any Turing machine program with respect to **Syntax** and no constraints on the amount of tapes.
+An ```accept``` state seeking multitape non deterministic Turing machine simulator allows you to write and execute any Turing machine program with respect to **Syntax** and no constraints on the amount of tapes.
 
 ## Getting Started
 To obtain a copy of the simulator just download Turing Machine.jar
@@ -26,10 +26,10 @@ How to install on Windows
 ```
 
 ### Usage
-To open the simulator use 
+To open the simulator:
 
 ```
-java -jar "name of .jar"
+java -jar "path to .jar"
 ```
 
 ### Syntax
