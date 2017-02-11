@@ -1,2 +1,8 @@
-# Multitape-Non-Deterministic-Turing-Machine
-An accept-state seeking multitape non deterministic Turing machine.
+# Multitape Non Deterministic Turing Machine Simulator
+An accept-state seeking multitape non deterministic Turing machine simulator allows you to write and execute any Turing machine program with respect to **Syntax** and no constraints on the ammount of tapes.
+
+## Getting Started
+To obtain a copy of the simulator just download Turing Machine.jar
+
+### Prerequisites
+* [Java 8] (http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
