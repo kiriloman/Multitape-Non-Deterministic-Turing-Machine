@@ -138,8 +138,3 @@ Let's use the example above.
 * If you, for example, use **2** as initial input and after machine stops you don't add any values to it and just run, the machine will run normally finishing in 4 transitions and decision sequence **2111**.
 
 
-
-
-
-
-![Alt text](Images/add_fitas.png?raw=true)
