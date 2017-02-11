@@ -107,7 +107,7 @@ It is **not possible** to add values to the decision sequence in following cases
 
 #### No Initial Input
 
-For the sake of a simple example let's use a not well formed non deterministic program and a single tape **011** with its head on **0**.
+For the sake of a simple example let's use a not well formed non deterministic program and a single tape ```011``` with its head on ```0```.
 Program:  
 
 0 0 a r 0  
@@ -126,15 +126,15 @@ Backtrack  | 011          | 0    |
 1 1 a r 1  | baa*_*       | *_*  | 211 
 1 *_* *_* * halt | baa*_* | *_*  | 2111
 
-As the last transition leads to a halting state the execution finishes and the final decision sequence is **2111**.
+As the last transition leads to a halting state the execution finishes and the final decision sequence is ```2111```.
 
 #### With Initial Input
 
 Let's use the example above.
 
-* If you use **2111** as initial input in decision sequence, the machine will halt within 4 transitions because this sequence will take it to a halting state.
-* If you, for example, use **211** as initial input, the machine will stop after those 3 transitions and you can add values to it before running it again.
-* If you, for example, use **3** as initial input, the machine will abort because there are only 2 possible transitions for state **0** and head **0**.
-* If you, for example, use **2** as initial input and after machine stops you don't add any values to it and just run, the machine will run normally finishing in 4 transitions and decision sequence **2111**.
+* If you use ```2111``` as initial input in decision sequence, the machine will halt within 4 transitions because this sequence will take it to a halting state.
+* If you, for example, use ```211``` as initial input, the machine will stop after those 3 transitions and you can add values to it before running it again.
+* If you, for example, use ```3``` as initial input, the machine will abort because there are only 2 possible transitions for state ```0``` and head ```0```.
+* If you, for example, use ```2``` as initial input and after machine stops you don't add any values to it and just run, the machine will run normally finishing in 4 transitions and decision sequence ```2111```.
 
 
