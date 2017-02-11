@@ -48,7 +48,7 @@ Use ```_``` to represent spaces, and ```*``` instead of a character read to mean
 This simulator needs a program and a certain amount of tapes. The number of tapes depends on the program. 
 When opened the simulator shows a GUI where you will be working.
 
-![Alt text](Images/turingmachine.png?raw=true) "Turing machine simulator"
+![Alt text](Images/turingmachine.png?raw=true "Turing machine simulator")
 
 ### Meanings
 
