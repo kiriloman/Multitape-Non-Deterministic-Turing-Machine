@@ -75,6 +75,13 @@ When opened the simulator shows a GUI where you will be working.
 6. Syntax: syntax to follow on creation of a program;
 7. Log: illustrates all executed transitions until current moment.
 
+### Running The Simulator
+
+1. Load one of the program on your computer, or write your own in the **Program** area.
+2. Enter your tapes in **Tapes** area. They will be written in **Transitions** area and the heads will be highlighted. Enter the sequence in the **Decision Sequence** field if needed. Click **Set** to initialise the machine.
+3. Click on **Run** to start the Turing machine and run it until it halts (if ever). Click on **Pause/Resume** to interrupt the Turing machine while it is running. Alternatively, click **Step** to run a single step of the Turing machine.
+4. Click **Set** to restore the Turing machine to its initial state so it can be run again.
+
 ### A Closer Look At Decision Sequence
 
 Assuming that you know what a [non deterministic Turing machine](https://en.wikipedia.org/wiki/Non-deterministic_Turing_machine) is and have read about [Breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search), clarification on what **Decision Sequence** is and how to use it follows:
@@ -93,7 +100,7 @@ It is **possible** to add values to the decision sequence in following cases:
 It is **not possible** to add values to the decision sequence in following cases:  
 
 1. An initial sequence wasn't given.
-2. An initial sequence was given, but the machine didn't finish its the execution yet.
+2. An initial sequence was given, but the machine didn't finish its execution yet.
 3. An initial sequence was given, the machine finished executing it and stopped not reaching any halt state and you didn't add any values before running again.
 
 #### Example
@@ -101,6 +108,7 @@ It is **not possible** to add values to the decision sequence in following cases
 #### No Initial Input
 
 For the sake of a simple example let's use a not well formed non deterministic program and a single tape **011** with its head on **0**.
+Program:  
 
 0 0 a r 0  
 0 0 b r 1  
@@ -118,13 +126,13 @@ Backtrack  | 011          | 0    |
 1 1 a r 1  | baa*_*       | *_*  | 211 
 1 *_* *_* * halt | baa*_* | *_*  | 2111
 
-As the last transition leads to a **halt** state the execution finishes and the final decision sequence is **2111**.
+As the last transition leads to a halting state the execution finishes and the final decision sequence is **2111**.
 
 #### With Initial Input
 
 Let's use the example above.
 
-* If you use **2111** as initial input in decision sequence, the machine will halt within 4 transitions because this sequence will take it to a **halt** state.
+* If you use **2111** as initial input in decision sequence, the machine will halt within 4 transitions because this sequence will take it to a halting state.
 * If you, for example, use **211** as initial input, the machine will stop after those 3 transitions and you can add values to it before running it again.
 * If you, for example, use **3** as initial input, the machine will abort because there are only 2 possible transitions for state **0** and head **0**.
 * If you, for example, use **2** as initial input and after machine stops you don't add any values to it and just run, the machine will run normally finishing in 4 transitions and decision sequence **2111**.
