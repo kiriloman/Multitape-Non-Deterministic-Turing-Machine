@@ -48,8 +48,24 @@ Use ```_``` to represent spaces, and ```*``` instead of a character read to mean
 This simulator needs a program and a certain amount of tapes. The number of tapes depends on the program. 
 When opened the simulator shows a GUI where you will be working.
 
-![Alt text](Images/turingmachine.png?raw=true){TesT}
+![Alt text](Images/turingmachine.png?raw=true)
 
+### Meanings:
+
+1. Transitions;
+2. Program;
+3. Controls:
+* **Steps**: how many transitions have been executed until current moment;
+* **Run**: executes the program;
+* **Run at full speed**: runs as fast as your computer allows;
+* **Step**: executes one transition;
+* **Pause/Resume**: pauses/resumes the execution;
+* **Set**: initiates the tapes and machine.
+4. Tapes. One in each line;
+5. Pre-execution controls
+* **Decision Sequence**: shows the decisions made my machine untill current moment; is used in non-deterministic cases. Will automatically fill itself when a transition is executed. Explanation on how to use in **A Closer Look At Decision Sequence**;
+* **Clear**: clears **Decision Sequence**;
+* **Pick every step**: 
 
 
 
