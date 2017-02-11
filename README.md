@@ -77,15 +77,44 @@ When opened the simulator shows a GUI where you will be working.
 
 ### A Closer Look At Decision Sequence
 
-Assuming that you know what a [non deterministic Turing machine](https://en.wikipedia.org/wiki/Non-deterministic_Turing_machine) is, clarification on how to use **Decision Sequence** will follow.
+Assuming that you know what a [non deterministic Turing machine](https://en.wikipedia.org/wiki/Non-deterministic_Turing_machine) is and have read about [Breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search), clarification on what **Decision Sequence** is and how to use it follows:
 
-Let's use a simple non deterministic program which can stay in state **0** in infinite loop or go to state **1** and halt.
+* When the Turing machine halts the decision sequence's content will be a string of numbers which explains the path in a tree from the initiation to the halting state;
+* If not yet in halting state, the decision sequence will keep changing showing the path taken until current moment;
 
-0 * a r 0  
+It is possible to transform a non deterministic problem into a deterministic one using the decision sequence.
+Before initiating the machine you should type in the path you want the machine to take. It will follows it strictly and will perform every transition mentioned (if such exists).
+
+It is **possible** to add values to the decision sequence in following cases:
+1. Before initiating the tapes and the machine.
+2. Every time machine stops executing previous given sequence.
+
+It is **not possible** to add values to the decision sequence in following cases:
+1. An initial sequence wasn't given.
+2. An initial sequence was given, but the machine didn't finish its the execution yet.
+3. An initial sequence was given, the machine finished executing it and stopped not reaching any halt state and you didn't add any values before running again.
+
+#### Example
+
+For the sake of a simple example let's use a not well formed non deterministic program and a single tape **011** with its head on **0**.
+
+0 0 a r 0  
 0 0 b r 1  
 1 0 a r 1  
 1 1 a r 1  
-1 _ _ * halt
+1 _ _ * halt  
+
+Transition | Tape Content | Head | Decision Sequence
+---------- | ------------ | ---- | -----------------
+Initiation | 011          | 0    |
+0 0 a r 0  | a11          | 1    | 1
+Backtrack  | 011          | 0    |
+0 0 b r 1  | b11          | 1    | 2
+1 1 a r 1  | ba1          | 1    | 21
+1 1 a r 1  | baa*_*       | *_*  | 211 
+1 *_* *_* * halt | baa*_* | *_*  | 2111
+
+
 
 
 
