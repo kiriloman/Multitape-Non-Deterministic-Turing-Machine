@@ -1,5 +1,5 @@
 # Multitape Non Deterministic Turing Machine Simulator
-An ```accept``` state seeking multitape non deterministic Turing machine simulator allows you to write and execute any Turing machine program with respect to **Syntax** and no constraints on the amount of tapes.
+An ```accept state``` seeking multitape non deterministic Turing machine simulator allows you to write and execute any Turing machine program with respect to **Syntax** and no constraints on the amount of tapes.
 
 ## Getting Started
 To obtain a copy of the simulator just download Turing Machine.jar
@@ -41,3 +41,5 @@ Any program must follow the structure:
  <current state> <character read> <character written> <direction to move> <state to transition into>
  ```
 Use ```_``` to represent spaces, and ```*``` instead of a character read to mean any character, or instead of a character written/direction to mean no change. Refer to ```Examples``` folder to clarify.
+
+[TEST](Images/add_fitas.png)
