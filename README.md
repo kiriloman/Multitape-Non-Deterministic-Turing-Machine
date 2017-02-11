@@ -42,4 +42,4 @@ Any program must follow the structure:
  ```
 Use ```_``` to represent spaces, and ```*``` instead of a character read to mean any character, or instead of a character written/direction to mean no change. Refer to ```Examples``` folder to clarify.
 
-[TEST](Images/add_fitas.png)
+![Alt text](Images/add_fitas.png?raw=true)
