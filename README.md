@@ -65,9 +65,17 @@ When opened the simulator shows a GUI where you will be working.
 
 4. Tapes. One in each line;
 5. Pre-execution controls
-* **Decision Sequence**: shows the decisions made my machine untill current moment; is used in non-deterministic cases. Will automatically fill itself when a transition is executed. Explanation on how to use in **A Closer Look At Decision Sequence**;
-* **Clear**: clears **Decision Sequence**;
-* **Pick every step**: 
+
+ 1. **Decision Sequence**: shows the decisions made my machine until current moment; is used in non-deterministic cases. Will automatically fill itself when a transition is executed. Explanation on how to use in **A Closer Look At Decision Sequence**;
+ 2. **Clear**: clears **Decision Sequence**;
+ 3. **Pick every step**: in non deterministic cases the machine will offer you to pick any possible transition you like;
+ 4. **Open**: opens a program from your computer;
+ 5. **Save**: saves the program written in **Program** field to your computer.
+ 
+6. Syntax: syntax to follow on creation of a program;
+7. Log: illustrates all executed transitions until current moment.
+
+
 
 
 
