@@ -1,5 +1,5 @@
 # Multitape Non Deterministic Turing Machine Simulator
-An ```accept state``` seeking multitape non deterministic Turing machine simulator allows you to write and execute any Turing machine program with respect to **Syntax** and no constraints on the amount of tapes.
+An ```accept state``` seeking multitape non deterministic Turing machine simulator allows you to write and execute any Turing machine program with respect to **Syntax** and no constraints on the amount of tapes. In non deterministic cases it uses [Breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search) to find a path to a halting state, preferably a halt-accept state.
 
 ## Getting Started
 To obtain a copy of the simulator just download Turing Machine.jar
@@ -77,8 +77,16 @@ When opened the simulator shows a GUI where you will be working.
 
 ### A Closer Look At Decision Sequence
 
-Assuming that you know what is a non deterministic Turing machine
+Assuming that you know what a [non deterministic Turing machine](https://en.wikipedia.org/wiki/Non-deterministic_Turing_machine) is, clarification on how to use **Decision Sequence** will follow.
 
+Let's use a simple non deterministic program which can stay in state **0** in infinite loop or go to state **1** and halt.
+
+0 * a r 0
+0 0 b r 1
+
+1 0 a r 1
+1 1 a r 1 
+1 _ _ * halt
 
 
 
