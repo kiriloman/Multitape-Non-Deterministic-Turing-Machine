@@ -81,10 +81,10 @@ Assuming that you know what a [non deterministic Turing machine](https://en.wiki
 
 Let's use a simple non deterministic program which can stay in state **0** in infinite loop or go to state **1** and halt.
 
-0 * a r 0__
-0 0 b r 1__
-1 0 a r 1__
-1 1 a r 1__
+0 * a r 0  
+0 0 b r 1  
+1 0 a r 1  
+1 1 a r 1  
 1 _ _ * halt
 
 
