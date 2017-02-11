@@ -25,3 +25,5 @@ How to install on mac
 How to install on Windows
 ```
 
+### Syntax
+Syntax inspired by [Anthony Morphett](http://morphett.info/turing/turing.html).
