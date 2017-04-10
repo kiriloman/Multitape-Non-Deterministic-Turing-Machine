@@ -1,3 +1,5 @@
+package ist.turingmachine;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.io.*;
@@ -24,11 +26,18 @@ public class TM_Run extends TM_Gui implements Runnable {
             str = reader.readLine();
             ArrayList<String> inner;
             while (str != null) {
-                paneTapesOutput.setText(paneTapesOutput.getText() + str + "\n");
+            	if (str.length() > 0)
+            		paneTapesOutput.setText(paneTapesOutput.getText() + str + "\n");
+            	else
+            		paneTapesOutput.setText(paneTapesOutput.getText() + "_" + "\n");
                 inner = new ArrayList<>();
-                for (int i = 0; i < str.length(); i++) {
-                    inner.add(Character.toString(str.charAt(i)));
+                if (str.length() > 0) {
+	                for (int i = 0; i < str.length(); i++) {
+	                	inner.add(Character.toString(str.charAt(i)));
+	                }
                 }
+                else
+                	inner.add("_");
                 tapes_with_content.add(new Tape(number_of_tapes));
                 number_of_tapes++;
                 tapes.add(inner);
@@ -61,12 +70,19 @@ public class TM_Run extends TM_Gui implements Runnable {
             while (str != null) {
                 str = str.replaceAll("\\s+", " ").trim();
                 parts = str.split(" ");
-                if (!str.equals("") && !parts[0].equals(";") && parts.length >= 5) {
-                    states.add(parts[0]);
-                    read.add(parts[1]);
-                    write.add(parts[2]);
-                    move.add(parts[3]);
-                    goToState.add(parts[4]);
+                if (!str.equals("") && !parts[0].startsWith(";")) {
+                	if (parts.length >= 5) {
+	                    states.add(parts[0]);
+	                    read.add(parts[1]);
+	                    write.add(parts[2]);
+	                    move.add(parts[3]);
+	                    goToState.add(parts[4]);
+	                    System.out.println(parts[4].length() + " " + parts[4]);
+                	}
+                    else {
+                    	paneTapesOutput.setText(paneTapesOutput.getText() + "\n" + str + " does not have the right number of read/write/move.");
+                    	return;
+                    }
                 }
                 str = reader_com.readLine();
             }
@@ -446,7 +462,7 @@ public class TM_Run extends TM_Gui implements Runnable {
                 return false;
             }
             for (int j = 0; j < move.get(i).length(); j++) {
-                if (move.get(i).charAt(j) != '*' && move.get(i).charAt(j) != 'l' && move.get(i).charAt(j) != 'r') {
+                if (move.get(i).toLowerCase().charAt(j) != 's' && move.get(i).charAt(j) != '*' && move.get(i).toLowerCase().charAt(j) != 'l' && move.get(i).toLowerCase().charAt(j) != 'r') {
                     paneTapesOutput.setText(paneTapesOutput.getText() + "\n" + states.get(i) + " " + read.get(i) + " " + write.get(i) + " " + move.get(i) + " " + goToState.get(i) + " has wrong movement.");
                     return false;
                 }

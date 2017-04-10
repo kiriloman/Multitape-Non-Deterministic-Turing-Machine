@@ -1,3 +1,5 @@
+package ist.turingmachine;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
@@ -13,7 +15,7 @@ public class TM_Gui {
     public static JPanel panelMain = new JPanel(), panelCode = new JPanel(), panelInput = new JPanel(), panelTapes = new JPanel(new BorderLayout()), controlPanel = new JPanel(), panelMother = new JPanel(), panelSaveOpen = new JPanel(), panelNonDeterministic = new JPanel(), panelSyntax = new JPanel(), panelProgram = new JPanel(), panelCodeInput = new JPanel();
     public static JScrollPane scrollPane, inputScrollPane, frameScroll, logScroll, outputScroll;
     public static JTextArea paneCode, paneInput, paneSyntax, paneLog;
-    public static JButton clear = new JButton("Clear"), run = new JButton("Run"), pause = new JButton("Pause"), step = new JButton("Step"), reset = new JButton("Set"), open = new JButton("Open"), save = new JButton("Save");
+    public static JButton decisionButton = new JButton(">"), clear = new JButton("Clear"), run = new JButton("Run"), pause = new JButton("Pause"), step = new JButton("Step"), reset = new JButton("Set"), open = new JButton("Open"), save = new JButton("Save");
     public static JCheckBox run_faster = new JCheckBox("Run at full speed"), choose_steps = new JCheckBox("Pick every step");
     public static JSplitPane splitter, splitCode;
     public static JLabel counterField = new JLabel("0", SwingConstants.CENTER), counterLabelField = new JLabel("Steps", SwingConstants.CENTER);
@@ -98,14 +100,15 @@ public class TM_Gui {
         inputScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         inputScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-
-        NonDeterministicField.setPreferredSize(new Dimension(400, 40));
+        
+        NonDeterministicField.setPreferredSize(new Dimension(0, 0));
         NonDeterministicField.setFont(NonDeterministicFont);
         NonDeterministicField.setOpaque(false);
         NonDeterministicField.setText("Decision Sequence");
         NonDeterministicField.setHorizontalAlignment(SwingConstants.CENTER);
+        panelNonDeterministic.add(decisionButton);
         panelNonDeterministic.add(NonDeterministicField);
-        panelNonDeterministic.add(clear);
+        //panelNonDeterministic.add(clear);
         panelNonDeterministic.add(choose_steps);
         panelNonDeterministic.setBorder(null);
 
@@ -199,6 +202,18 @@ public class TM_Gui {
 
 
     public static void Props() {
+    	decisionButton.addActionListener(e -> {
+    		if (!NonDeterministicField.getSize().equals(new Dimension(0, 0))){
+    			NonDeterministicField.setPreferredSize(new Dimension(0, 0));
+    			NonDeterministicField.setSize(new Dimension(0, 0));
+    			frame.pack();
+    		}
+    		else {
+    			NonDeterministicField.setPreferredSize(new Dimension(400, 40));
+    			NonDeterministicField.setSize(new Dimension(400, 40));
+    			frame.pack();
+    		}
+    	});
         paneInput.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -456,6 +471,10 @@ public class TM_Gui {
             run_used = false;
         });
         reset.addActionListener(e -> {
+        	highlighter_decisions.removeAllHighlights();
+            NonDeterministicField.setOpaque(true);
+            NonDeterministicField.setHorizontalAlignment(SwingConstants.LEFT);
+            NonDeterministicField.setText("");
             run_used = false;
             paused = true;
             if (t.isAlive()) {

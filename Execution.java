@@ -1,3 +1,5 @@
+package ist.turingmachine;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -21,20 +23,20 @@ public class Execution implements Serializable {
     }
     public void move(Integer tape_num, String direction) {
         int h = tapes_with_content.get(tape_num).getHead();
-        if (h == tapes_with_content.get(tape_num).getContent().size() - 1 && direction.equals("r")) {
+        if (h == tapes_with_content.get(tape_num).getContent().size() - 1 && direction.toLowerCase().equals("r")) {
             tapes_with_content.get(tape_num).content.add("_");
             tapes_with_content.get(tape_num).setHead(h + 1);
         }
         else {
-            if (h == 0 && direction.equals("l")) {
+            if (h == 0 && direction.toLowerCase().equals("l")) {
                 tapes_with_content.get(tape_num).content.add(0, "_");
             }
             else {
-                if (direction.equals("r")) {
+                if (direction.toLowerCase().equals("r")) {
                     tapes_with_content.get(tape_num).setHead(h + 1);
                 }
                 else {
-                    if (direction.equals("l")) {
+                    if (direction.toLowerCase().equals("l")) {
                         tapes_with_content.get(tape_num).setHead(h - 1);
                     }
                 }
