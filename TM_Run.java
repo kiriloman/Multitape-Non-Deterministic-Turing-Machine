@@ -26,35 +26,20 @@ public class TM_Run extends TM_Gui implements Runnable {
             str = reader.readLine();
             ArrayList<String> inner;
             while (str != null) {
-            	if (str.length() > 0)
-            		paneTapesOutput.setText(paneTapesOutput.getText() + str + "\n");
-            	else
-            		paneTapesOutput.setText(paneTapesOutput.getText() + "_" + "\n");
-                inner = new ArrayList<>();
-                if (str.length() > 0) {
+            	if (!str.equals("Initial tapes here, one in each line")) {
+	            	paneTapesOutput.setText(paneTapesOutput.getText() + str + "\n");
+	                inner = new ArrayList<>();
 	                for (int i = 0; i < str.length(); i++) {
 	                	inner.add(Character.toString(str.charAt(i)));
 	                }
-                }
-                else
-                	inner.add("_");
-                tapes_with_content.add(new Tape(number_of_tapes));
-                number_of_tapes++;
-                tapes.add(inner);
-                str = reader.readLine();
+	                tapes_with_content.add(new Tape(number_of_tapes));
+	                number_of_tapes++;
+	                tapes.add(inner);
+            	}
+            	str = reader.readLine();
             }
         } catch (IOException e1) {
 
-        }
-
-        if (!paneTapesOutput.getText().equals("")) {
-            try {
-                String content = paneTapesOutput.getDocument().getText(0, paneTapesOutput.getDocument().getLength());
-                int line = content.lastIndexOf("\n");
-                paneTapesOutput.getDocument().remove(line, paneTapesOutput.getDocument().getLength() - line);
-            } catch (BadLocationException e1) {
-
-            }
         }
 
         String codeCommands = paneCode.getText();
@@ -81,6 +66,14 @@ public class TM_Run extends TM_Gui implements Runnable {
                 	}
                     else {
                     	paneTapesOutput.setText(paneTapesOutput.getText() + "\n" + str + " does not have the right number of read/write/move.");
+                    	paneLog.setFocusable(true);
+                        NonDeterministicField.setFocusable(true);
+                        step.setEnabled(true);
+                        run_used = false;
+                        stepped = false;
+                        reset_used = false;
+                        paneLog.setCaretPosition(paneLog.getDocument().getLength());
+                        choose_steps.setEnabled(true);
                     	return;
                     }
                 }
@@ -89,18 +82,49 @@ public class TM_Run extends TM_Gui implements Runnable {
         } catch (IOException e1) {
 
         }
+        
         if (states.size() != 0) {
             for (int i = 0; i < tapes_with_content.size(); i++) {
                 tapes_with_content.get(i).setContent(tapes.get(i));
                 tapes_with_content.get(i).setHead(0);
                 tapes_with_content.get(i).setState(states.get(0));
             }
+            if (read.get(0).length() > number_of_tapes) {
+            	System.out.println("in");
+            	int diff = read.get(0).length() - number_of_tapes;
+            	ArrayList<String> aux;
+            	
+            	for (int i = 0; i < diff; i++) {
+            		aux = new ArrayList<>();
+            		aux.add("_");
+            		number_of_tapes++;
+            		System.out.println("in2");
+            		paneTapesOutput.setText(paneTapesOutput.getText() + "_" + "\n");
+            		tapes_with_content.add(new Tape(number_of_tapes));
+            		tapes_with_content.get(number_of_tapes - 1).setContent(aux);
+                    tapes_with_content.get(number_of_tapes - 1).setHead(0);
+                    tapes_with_content.get(number_of_tapes - 1).setState(states.get(0));
+            	}
+            }
         }
         else {
             paneTapesOutput.setText(paneTapesOutput.getText() + "\n" + "You forgot the program.");
         }
+        
+        if (!paneTapesOutput.getText().equals("")) {
+            try {
+                String content = paneTapesOutput.getDocument().getText(0, paneTapesOutput.getDocument().getLength());
+                int line = content.lastIndexOf("\n");
+                paneTapesOutput.getDocument().remove(line, paneTapesOutput.getDocument().getLength() - line);
+            } catch (BadLocationException e1) {
 
+            }
+        }
+        System.out.println("sdla");
+        
+        System.out.println(check_coherence());
         if (check_coherence()) {
+        	System.out.println("checked");	
             if (!NonDeterministicField.getText().equals("") && !NonDeterministicField.getText().equals("Decision Sequence")) {
                 decision_number = 0;
                 decisions_enabled = true;
