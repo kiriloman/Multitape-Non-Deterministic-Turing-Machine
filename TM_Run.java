@@ -1,3 +1,5 @@
+package ist.turingmachine;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.io.*;
@@ -24,28 +26,20 @@ public class TM_Run extends TM_Gui implements Runnable {
             str = reader.readLine();
             ArrayList<String> inner;
             while (str != null) {
-                paneTapesOutput.setText(paneTapesOutput.getText() + str + "\n");
-                inner = new ArrayList<>();
-                for (int i = 0; i < str.length(); i++) {
-                    inner.add(Character.toString(str.charAt(i)));
-                }
-                tapes_with_content.add(new Tape(number_of_tapes));
-                number_of_tapes++;
-                tapes.add(inner);
-                str = reader.readLine();
+            	if (!str.equals("Initial tapes here, one in each line")) {
+	            	paneTapesOutput.setText(paneTapesOutput.getText() + str + "\n");
+	                inner = new ArrayList<>();
+	                for (int i = 0; i < str.length(); i++) {
+	                	inner.add(Character.toString(str.charAt(i)));
+	                }
+	                tapes_with_content.add(new Tape(number_of_tapes));
+	                number_of_tapes++;
+	                tapes.add(inner);
+            	}
+            	str = reader.readLine();
             }
         } catch (IOException e1) {
 
-        }
-
-        if (!paneTapesOutput.getText().equals("")) {
-            try {
-                String content = paneTapesOutput.getDocument().getText(0, paneTapesOutput.getDocument().getLength());
-                int line = content.lastIndexOf("\n");
-                paneTapesOutput.getDocument().remove(line, paneTapesOutput.getDocument().getLength() - line);
-            } catch (BadLocationException e1) {
-
-            }
         }
 
         String codeCommands = paneCode.getText();
@@ -61,30 +55,76 @@ public class TM_Run extends TM_Gui implements Runnable {
             while (str != null) {
                 str = str.replaceAll("\\s+", " ").trim();
                 parts = str.split(" ");
-                if (!str.equals("") && !parts[0].equals(";") && parts.length >= 5) {
-                    states.add(parts[0]);
-                    read.add(parts[1]);
-                    write.add(parts[2]);
-                    move.add(parts[3]);
-                    goToState.add(parts[4]);
+                if (!str.equals("") && !parts[0].startsWith(";")) {
+                	if (parts.length >= 5) {
+	                    states.add(parts[0]);
+	                    read.add(parts[1]);
+	                    write.add(parts[2]);
+	                    move.add(parts[3]);
+	                    goToState.add(parts[4]);
+	                    System.out.println(parts[4].length() + " " + parts[4]);
+                	}
+                    else {
+                    	paneTapesOutput.setText(paneTapesOutput.getText() + "\n" + str + " does not have the right number of read/write/move.");
+                    	paneLog.setFocusable(true);
+                        NonDeterministicField.setFocusable(true);
+                        step.setEnabled(true);
+                        run_used = false;
+                        stepped = false;
+                        reset_used = false;
+                        paneLog.setCaretPosition(paneLog.getDocument().getLength());
+                        choose_steps.setEnabled(true);
+                    	return;
+                    }
                 }
                 str = reader_com.readLine();
             }
         } catch (IOException e1) {
 
         }
+        
         if (states.size() != 0) {
             for (int i = 0; i < tapes_with_content.size(); i++) {
                 tapes_with_content.get(i).setContent(tapes.get(i));
                 tapes_with_content.get(i).setHead(0);
                 tapes_with_content.get(i).setState(states.get(0));
             }
+            if (read.get(0).length() > number_of_tapes) {
+            	System.out.println("in");
+            	int diff = read.get(0).length() - number_of_tapes;
+            	ArrayList<String> aux;
+            	
+            	for (int i = 0; i < diff; i++) {
+            		aux = new ArrayList<>();
+            		aux.add("_");
+            		number_of_tapes++;
+            		System.out.println("in2");
+            		paneTapesOutput.setText(paneTapesOutput.getText() + "_" + "\n");
+            		tapes_with_content.add(new Tape(number_of_tapes));
+            		tapes_with_content.get(number_of_tapes - 1).setContent(aux);
+                    tapes_with_content.get(number_of_tapes - 1).setHead(0);
+                    tapes_with_content.get(number_of_tapes - 1).setState(states.get(0));
+            	}
+            }
         }
         else {
             paneTapesOutput.setText(paneTapesOutput.getText() + "\n" + "You forgot the program.");
         }
+        
+        if (!paneTapesOutput.getText().equals("")) {
+            try {
+                String content = paneTapesOutput.getDocument().getText(0, paneTapesOutput.getDocument().getLength());
+                int line = content.lastIndexOf("\n");
+                paneTapesOutput.getDocument().remove(line, paneTapesOutput.getDocument().getLength() - line);
+            } catch (BadLocationException e1) {
 
+            }
+        }
+        System.out.println("sdla");
+        
+        System.out.println(check_coherence());
         if (check_coherence()) {
+        	System.out.println("checked");	
             if (!NonDeterministicField.getText().equals("") && !NonDeterministicField.getText().equals("Decision Sequence")) {
                 decision_number = 0;
                 decisions_enabled = true;
@@ -446,7 +486,7 @@ public class TM_Run extends TM_Gui implements Runnable {
                 return false;
             }
             for (int j = 0; j < move.get(i).length(); j++) {
-                if (move.get(i).charAt(j) != '*' && move.get(i).charAt(j) != 'l' && move.get(i).charAt(j) != 'r') {
+                if (move.get(i).toLowerCase().charAt(j) != 's' && move.get(i).charAt(j) != '*' && move.get(i).toLowerCase().charAt(j) != 'l' && move.get(i).toLowerCase().charAt(j) != 'r') {
                     paneTapesOutput.setText(paneTapesOutput.getText() + "\n" + states.get(i) + " " + read.get(i) + " " + write.get(i) + " " + move.get(i) + " " + goToState.get(i) + " has wrong movement.");
                     return false;
                 }
