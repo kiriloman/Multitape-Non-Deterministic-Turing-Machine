@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TM_Run extends TM_Gui implements Runnable {
     public static ArrayList<String> states, read, write, move, goToState;
@@ -160,7 +161,7 @@ public class TM_Run extends TM_Gui implements Runnable {
         boolean no_chill;
         int k = 0, l = 0;
         paused = true;
-        ArrayList<Integer> states_to_use = new ArrayList<>();
+        List<Integer> states_to_use = new ArrayList<>();
         ArrayList<String> marked_states = new ArrayList<>();
         ArrayList<String> queue = new ArrayList<>();
         ArrayList<Execution> execution_clones = new ArrayList<>();
@@ -361,7 +362,7 @@ public class TM_Run extends TM_Gui implements Runnable {
         }
     }
 
-    public static void create_dialog(ArrayList<Integer> states_to_use) {
+    public static void create_dialog(List<Integer> states_to_use) {
         if (states_to_use.size() != 1) {
             Object[] options = new Object[states_to_use.size()];
             for (int i = 0; i < states_to_use.size(); i++) {
@@ -469,7 +470,7 @@ public class TM_Run extends TM_Gui implements Runnable {
             return null;
         }
     }
-    public static String _arrayToString(ArrayList<String> array) {
+    public static String _arrayToString(List<String> array) {
         String str = "";
         for (int i = 0; i < array.size(); i++) {
             str += array.get(i);

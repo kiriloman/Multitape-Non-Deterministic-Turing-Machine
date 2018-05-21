@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="609bfe9f-8480-4be6-a79e-4a9f0acdbc28" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/ist/turingmachine/Execution.java" afterPath="$PROJECT_DIR$/src/main/java/ist/turingmachine/Execution.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ist/turingmachine/Main.java" afterPath="$PROJECT_DIR$/src/main/java/ist/turingmachine/Main.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ist/turingmachine/TM_Run.java" afterPath="$PROJECT_DIR$/src/main/java/ist/turingmachine/TM_Run.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ist/turingmachine/Tape.java" afterPath="$PROJECT_DIR$/src/main/java/ist/turingmachine/Tape.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,7 +50,7 @@
       <file leaf-file-name="Execution.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/ist/turingmachine/Execution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="846">
+            <state relative-caret-position="343">
               <caret line="47" column="61" lean-forward="false" selection-start-line="47" selection-start-column="61" selection-end-line="47" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -75,8 +72,8 @@
       <file leaf-file-name="TM_Run.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ist/turingmachine/TM_Run.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1072">
-              <caret line="316" column="70" lean-forward="false" selection-start-line="316" selection-start-column="70" selection-end-line="316" selection-end-column="70" />
+            <state relative-caret-position="1238">
+              <caret line="467" column="36" lean-forward="true" selection-start-line="467" selection-start-column="36" selection-end-line="467" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -110,9 +107,9 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/java/ist/turingmachine/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ist/turingmachine/TM_Run.java" />
         <option value="$PROJECT_DIR$/src/main/java/ist/turingmachine/Tape.java" />
         <option value="$PROJECT_DIR$/src/main/java/ist/turingmachine/Execution.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ist/turingmachine/TM_Run.java" />
       </list>
     </option>
   </component>
@@ -470,14 +467,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ist/turingmachine/TM_Run.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1072">
-          <caret line="316" column="70" lean-forward="false" selection-start-line="316" selection-start-column="70" selection-end-line="316" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ist/turingmachine/Tape.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="487">
@@ -499,9 +488,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ist/turingmachine/TM_Run.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1238">
+          <caret line="467" column="36" lean-forward="true" selection-start-line="467" selection-start-column="36" selection-end-line="467" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ist/turingmachine/Execution.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="846">
+        <state relative-caret-position="343">
           <caret line="47" column="61" lean-forward="false" selection-start-line="47" selection-start-column="61" selection-end-line="47" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
