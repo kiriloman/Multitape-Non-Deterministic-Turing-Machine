@@ -2,15 +2,15 @@ package ist.turingmachine;
 
 import java.util.List;
 
-// Check whats up with number. implement equals hashcode maybe
+// Check whats up with id. implement equals hashcode maybe
 public class Tape {
-    private Integer number;
+    private Integer id;
     private List<String> content;
     private Integer head;
     private String state;
 
-    public Tape(Integer number) {
-        this.number = number;
+    public Tape(Integer id) {
+        this.id = id;
         this.head = 0;
     }
 

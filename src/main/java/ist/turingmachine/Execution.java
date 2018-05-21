@@ -3,12 +3,13 @@ package ist.turingmachine;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: review, remove _, String -> char, find states into 1 method
 public class Execution {
-    public List<Tape> tapes_with_content;
+    private List<Tape> tapes;
     public List<String> states, read, write, move, goToNextState;
 
-    public Execution(List<Tape> tapes_with_content, List<String> states, List<String> read, List<String> write, List<String> move, List<String> goToNextState) {
-        this.tapes_with_content = tapes_with_content;
+    public Execution(List<Tape> tapes, List<String> states, List<String> read, List<String> write, List<String> move, List<String> goToNextState) {
+        this.tapes = tapes;
         this.states = states;
         this.read = read;
         this.write = write;
@@ -16,28 +17,35 @@ public class Execution {
         this.goToNextState = goToNextState;
     }
 
-    public void modifyContent(Integer tape_num, String modifier) {
-        if (!modifier.equals("*")) {
-            int h = tapes_with_content.get(tape_num).getHead();
-            tapes_with_content.get(tape_num).getContent().remove(h);
-            tapes_with_content.get(tape_num).getContent().add(h, modifier);
+    //+
+    public List<Tape> getTapes() {
+        return tapes;
+    }
+
+    //+
+    public void modifyContent(Integer tapeId, String newChar) {
+        if (!newChar.equals("*")) {
+            int head = tapes.get(tapeId).getHead();
+            tapes.get(tapeId).getContent().remove(head);
+            tapes.get(tapeId).getContent().add(head, newChar);
         }
     }
 
-    public void move(Integer tape_num, String direction) {
-        int h = tapes_with_content.get(tape_num).getHead();
-        if (h == tapes_with_content.get(tape_num).getContent().size() - 1 && direction.toLowerCase().equals("r")) {
-            tapes_with_content.get(tape_num).getContent().add("_");
-            tapes_with_content.get(tape_num).setHead(h + 1);
+    //switch somehow
+    public void move(Integer tapeId, String direction) {
+        int head = tapes.get(tapeId).getHead();
+        if (head == tapes.get(tapeId).getContent().size() - 1 && direction.toLowerCase().equals("r")) {
+            tapes.get(tapeId).getContent().add("_");
+            tapes.get(tapeId).setHead(head + 1);
         } else {
-            if (h == 0 && direction.toLowerCase().equals("l")) {
-                tapes_with_content.get(tape_num).getContent().add(0, "_");
+            if (head == 0 && direction.toLowerCase().equals("l")) {
+                tapes.get(tapeId).getContent().add(0, "_");
             } else {
                 if (direction.toLowerCase().equals("r")) {
-                    tapes_with_content.get(tape_num).setHead(h + 1);
+                    tapes.get(tapeId).setHead(head + 1);
                 } else {
                     if (direction.toLowerCase().equals("l")) {
-                        tapes_with_content.get(tape_num).setHead(h - 1);
+                        tapes.get(tapeId).setHead(head - 1);
                     }
                 }
             }
@@ -55,14 +63,14 @@ public class Execution {
     }
 
     public List<Integer> find_states_that_work() {
-        String current_state = tapes_with_content.get(0).getState();
+        String current_state = tapes.get(0).getState();
         List<Integer> poss = find_states(states, current_state);
         List<Integer> states_that_work = new ArrayList<>();
         Boolean pass;
         for (int j = 0; j < poss.size(); j++) {
             pass = true;
-            for (int i = 0; i < tapes_with_content.size() && pass; i++) {
-                if (!(read.get(poss.get(j)).charAt(i) == '*' || tapes_with_content.get(i).getContent().get(tapes_with_content.get(i).getHead()).equals(Character.toString(read.get(poss.get(j)).charAt(i))))) {
+            for (int i = 0; i < tapes.size() && pass; i++) {
+                if (!(read.get(poss.get(j)).charAt(i) == '*' || tapes.get(i).getContent().get(tapes.get(i).getHead()).equals(Character.toString(read.get(poss.get(j)).charAt(i))))) {
                     pass = false;
                 }
             }
@@ -81,7 +89,7 @@ public class Execution {
         List<Integer> integers = new ArrayList<>(), states_to_return = new ArrayList<>();
         for (int i = 0; i < states_that_work.size(); i++) {
             k = 0;
-            for (int j = 0; j < tapes_with_content.size(); j++) {
+            for (int j = 0; j < tapes.size(); j++) {
                 if (read.get(states_that_work.get(i)).charAt(j) == '*') {
                     k++;
                 }
@@ -102,12 +110,13 @@ public class Execution {
         return states_to_return;
     }
 
-    public void execute(Integer state_index) {
-        for (int i = 0; i < tapes_with_content.size(); i++) {
-            modifyContent(i, Character.toString(write.get(state_index).charAt(i)));
-            move(i, Character.toString(move.get(state_index).charAt(i)));
-            if (goToNextState.size() > state_index && goToNextState.get(state_index) != null) {
-                tapes_with_content.get(i).setState(goToNextState.get(state_index));
+    //for?
+    public void execute(Integer index) {
+        for (int i = 0; i < tapes.size(); i++) {
+            modifyContent(i, Character.toString(write.get(index).charAt(i)));
+            move(i, Character.toString(move.get(index).charAt(i)));
+            if (goToNextState.size() > index && goToNextState.get(index) != null) {
+                tapes.get(i).setState(goToNextState.get(index));
             }
         }
     }

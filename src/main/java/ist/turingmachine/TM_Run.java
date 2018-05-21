@@ -399,49 +399,49 @@ public class TM_Run extends TM_Gui implements Runnable {
             case "halt":
                 paneTapesOutput.setText("");
                 counterField.setText(String.valueOf(numpassos));
-                for (int j = 0; j < execution.tapes_with_content.size(); j++) {
-                    paneTapesOutput.setText(paneTapesOutput.getText() + _arrayToString(execution.tapes_with_content.get(j).getContent()) + "\n");
+                for (int j = 0; j < execution.getTapes().size(); j++) {
+                    paneTapesOutput.setText(paneTapesOutput.getText() + _arrayToString(execution.getTapes().get(j).getContent()) + "\n");
                 }
                 paneTapesOutput.setText(paneTapesOutput.getText() + "HALTED");
-                for (int j = 0; j < execution.tapes_with_content.size(); j++) {
-                    highlighter.addHighlight(l + execution.tapes_with_content.get(j).getHead(), l + execution.tapes_with_content.get(j).getHead() + 1, painter);
-                    l += execution.tapes_with_content.get(j).getContent().size() + 1;
+                for (int j = 0; j < execution.getTapes().size(); j++) {
+                    highlighter.addHighlight(l + execution.getTapes().get(j).getHead(), l + execution.getTapes().get(j).getHead() + 1, painter);
+                    l += execution.getTapes().get(j).getContent().size() + 1;
                 }
                 break;
             case "halt-accept":
                 paneTapesOutput.setText("");
                 counterField.setText(String.valueOf(numpassos));
-                for (int j = 0; j < execution.tapes_with_content.size(); j++) {
-                    paneTapesOutput.setText(paneTapesOutput.getText() + _arrayToString(execution.tapes_with_content.get(j).getContent()) + "\n");
+                for (int j = 0; j < execution.getTapes().size(); j++) {
+                    paneTapesOutput.setText(paneTapesOutput.getText() + _arrayToString(execution.getTapes().get(j).getContent()) + "\n");
                 }
                 paneTapesOutput.setText(paneTapesOutput.getText() + "ACCEPTED");
-                for (int j = 0; j < execution.tapes_with_content.size(); j++) {
-                    highlighter.addHighlight(l + execution.tapes_with_content.get(j).getHead(), l + execution.tapes_with_content.get(j).getHead() + 1, painter);
-                    l += execution.tapes_with_content.get(j).getContent().size() + 1;
+                for (int j = 0; j < execution.getTapes().size(); j++) {
+                    highlighter.addHighlight(l + execution.getTapes().get(j).getHead(), l + execution.getTapes().get(j).getHead() + 1, painter);
+                    l += execution.getTapes().get(j).getContent().size() + 1;
                 }
                 break;
             case "halt-reject":
                 paneTapesOutput.setText("");
                 counterField.setText(String.valueOf(numpassos));
-                for (int j = 0; j < execution.tapes_with_content.size(); j++) {
-                    paneTapesOutput.setText(paneTapesOutput.getText() + _arrayToString(execution.tapes_with_content.get(j).getContent()) + "\n");
+                for (int j = 0; j < execution.getTapes().size(); j++) {
+                    paneTapesOutput.setText(paneTapesOutput.getText() + _arrayToString(execution.getTapes().get(j).getContent()) + "\n");
                 }
                 paneTapesOutput.setText(paneTapesOutput.getText() + "REJECTED");
-                for (int j = 0; j < execution.tapes_with_content.size(); j++) {
-                    highlighter.addHighlight(l + execution.tapes_with_content.get(j).getHead(), l + execution.tapes_with_content.get(j).getHead() + 1, painter);
-                    l += execution.tapes_with_content.get(j).getContent().size() + 1;
+                for (int j = 0; j < execution.getTapes().size(); j++) {
+                    highlighter.addHighlight(l + execution.getTapes().get(j).getHead(), l + execution.getTapes().get(j).getHead() + 1, painter);
+                    l += execution.getTapes().get(j).getContent().size() + 1;
                 }
                 break;
             default:
                 paneTapesOutput.setText("");
                 counterField.setText(String.valueOf(numpassos));
-                for (int j = 0; j < execution.tapes_with_content.size(); j++) {
-                    paneTapesOutput.setText(paneTapesOutput.getText() + _arrayToString(execution.tapes_with_content.get(j).getContent()) + "\n");
+                for (int j = 0; j < execution.getTapes().size(); j++) {
+                    paneTapesOutput.setText(paneTapesOutput.getText() + _arrayToString(execution.getTapes().get(j).getContent()) + "\n");
                 }
                 paneTapesOutput.setText(paneTapesOutput.getText() + "ABORTED\nNO STATE TO FOLLOW");
-                for (int j = 0; j < execution.tapes_with_content.size(); j++) {
-                    highlighter.addHighlight(l + execution.tapes_with_content.get(j).getHead(), l + execution.tapes_with_content.get(j).getHead() + 1, painter);
-                    l += execution.tapes_with_content.get(j).getContent().size() + 1;
+                for (int j = 0; j < execution.getTapes().size(); j++) {
+                    highlighter.addHighlight(l + execution.getTapes().get(j).getHead(), l + execution.getTapes().get(j).getHead() + 1, painter);
+                    l += execution.getTapes().get(j).getContent().size() + 1;
                 }
                 break;
         }
@@ -450,12 +450,12 @@ public class TM_Run extends TM_Gui implements Runnable {
         int l = 0;
         counterField.setText(String.valueOf(numpassos));
         paneTapesOutput.setText("");
-        for (int j = 0; j < execution.tapes_with_content.size(); j++) {
-            paneTapesOutput.setText(paneTapesOutput.getText() + _arrayToString(execution.tapes_with_content.get(j).getContent()) + "\n");
+        for (int j = 0; j < execution.getTapes().size(); j++) {
+            paneTapesOutput.setText(paneTapesOutput.getText() + _arrayToString(execution.getTapes().get(j).getContent()) + "\n");
         }
-        for (int j = 0; j < execution.tapes_with_content.size(); j++) {
-            highlighter.addHighlight(l + execution.tapes_with_content.get(j).getHead(), l + execution.tapes_with_content.get(j).getHead() + 1, painter);
-            l += execution.tapes_with_content.get(j).getContent().size() + 1;
+        for (int j = 0; j < execution.getTapes().size(); j++) {
+            highlighter.addHighlight(l + execution.getTapes().get(j).getHead(), l + execution.getTapes().get(j).getHead() + 1, painter);
+            l += execution.getTapes().get(j).getContent().size() + 1;
         }
     }
     public static Object deepClone(Object object) {
