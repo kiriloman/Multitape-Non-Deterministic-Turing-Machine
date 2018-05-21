@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Multitape-Non-Deterministic-Turing-Machine:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Multitape_Non_Deterministic_Turing_Machine_jar</output-path>
+    <root id="archive" name="Multitape-Non-Deterministic-Turing-Machine.jar">
+      <element id="module-output" name="Multitape-Non-Deterministic-Turing-Machine" />
+    </root>
+  </artifact>
+</component>
