@@ -297,7 +297,7 @@ public class TM_Run extends TM_Gui implements Runnable {
 
                 if (!marked_states.contains(state_to_queue)) {
                     paneLog.setText(paneLog.getText() + execution_clones.get(i + clone_number).states.get(states_to_use.get(i)) + "   " + execution_clones.get(i + clone_number).read.get(states_to_use.get(i)) + "   " + execution_clones.get(i + clone_number).write.get(states_to_use.get(i)) + "   " + execution_clones.get(i + clone_number).move.get(states_to_use.get(i)) + "   " + execution_clones.get(i + clone_number).goToNextState.get(states_to_use.get(i)) + "\n");
-                    execution_clones.get(i + clone_number)._execute(states_to_use.get(i));
+                    execution_clones.get(i + clone_number).execute(states_to_use.get(i));
                     numpassos++;
                     draw(execution_clones.get(i + clone_number));
                     marked_states.add(state_to_queue);
@@ -314,7 +314,7 @@ public class TM_Run extends TM_Gui implements Runnable {
                 } else {
                     if (queue.contains(state_to_queue)) {
                         paneLog.setText(paneLog.getText() + execution_clones.get(i + clone_number).states.get(states_to_use.get(i)) + "   " + execution_clones.get(i + clone_number).read.get(states_to_use.get(i)) + "   " + execution_clones.get(i + clone_number).write.get(states_to_use.get(i)) + "   " + execution_clones.get(i + clone_number).move.get(states_to_use.get(i)) + "   " + execution_clones.get(i + clone_number).goToNextState.get(states_to_use.get(i)) + "\n");
-                        execution_clones.get(i + clone_number)._execute(states_to_use.get(i));
+                        execution_clones.get(i + clone_number).execute(states_to_use.get(i));
                         numpassos++;
                         draw(execution_clones.get(i + clone_number));
                         if (state_to_queue.substring(1).length() > decisions_string.length() || (state_to_queue.substring(1).length() <= decisions_string.length() && !state_to_queue.substring(1).equals(decisions_string) && !state_to_queue.substring(1).equals("0") && !decisions_enabled)) {

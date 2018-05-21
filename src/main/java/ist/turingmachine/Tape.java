@@ -1,11 +1,11 @@
 package ist.turingmachine;
 
-import java.util.ArrayList;
+import java.util.List;
 
 // Check whats up with number. implement equals hashcode maybe
 public class Tape {
     private Integer number;
-    private ArrayList<String> content;
+    private List<String> content;
     private Integer head;
     private String state;
 
@@ -22,11 +22,11 @@ public class Tape {
         return head;
     }
 
-    public void setContent(ArrayList<String> content) {
+    public void setContent(List<String> content) {
         this.content = content;
     }
 
-    public ArrayList<String> getContent() {
+    public List<String> getContent() {
         return content;
     }
 

@@ -1,12 +1,13 @@
 package ist.turingmachine;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Execution implements Serializable {
-    public ArrayList<Tape> tapes_with_content;
-    public ArrayList<String> states, read, write, move, goToNextState;
-    public Execution(ArrayList<Tape> tapes_with_content, ArrayList<String> states, ArrayList<String> read, ArrayList<String> write, ArrayList<String> move, ArrayList<String> goToNextState) {
+public class Execution {
+    public List<Tape> tapes_with_content;
+    public List<String> states, read, write, move, goToNextState;
+
+    public Execution(List<Tape> tapes_with_content, List<String> states, List<String> read, List<String> write, List<String> move, List<String> goToNextState) {
         this.tapes_with_content = tapes_with_content;
         this.states = states;
         this.read = read;
@@ -14,6 +15,7 @@ public class Execution implements Serializable {
         this.move = move;
         this.goToNextState = goToNextState;
     }
+
     public void modifyContent(Integer tape_num, String modifier) {
         if (!modifier.equals("*")) {
             int h = tapes_with_content.get(tape_num).getHead();
@@ -21,21 +23,19 @@ public class Execution implements Serializable {
             tapes_with_content.get(tape_num).getContent().add(h, modifier);
         }
     }
+
     public void move(Integer tape_num, String direction) {
         int h = tapes_with_content.get(tape_num).getHead();
         if (h == tapes_with_content.get(tape_num).getContent().size() - 1 && direction.toLowerCase().equals("r")) {
             tapes_with_content.get(tape_num).getContent().add("_");
             tapes_with_content.get(tape_num).setHead(h + 1);
-        }
-        else {
+        } else {
             if (h == 0 && direction.toLowerCase().equals("l")) {
                 tapes_with_content.get(tape_num).getContent().add(0, "_");
-            }
-            else {
+            } else {
                 if (direction.toLowerCase().equals("r")) {
                     tapes_with_content.get(tape_num).setHead(h + 1);
-                }
-                else {
+                } else {
                     if (direction.toLowerCase().equals("l")) {
                         tapes_with_content.get(tape_num).setHead(h - 1);
                     }
@@ -43,8 +43,9 @@ public class Execution implements Serializable {
             }
         }
     }
-    public ArrayList<Integer> find_states(ArrayList<String> states, String current_state) {
-        ArrayList<Integer> possible_states_indexes = new ArrayList<>();
+
+    public List<Integer> find_states(List<String> states, String current_state) {
+        List<Integer> possible_states_indexes = new ArrayList<>();
         for (int i = 0; i < states.size(); i++) {
             if (states.get(i).equals(current_state)) {
                 possible_states_indexes.add(i);
@@ -52,10 +53,11 @@ public class Execution implements Serializable {
         }
         return possible_states_indexes;
     }
-    public ArrayList<Integer> find_states_that_work() {
+
+    public List<Integer> find_states_that_work() {
         String current_state = tapes_with_content.get(0).getState();
-        ArrayList<Integer> poss = find_states(states, current_state);
-        ArrayList<Integer> states_that_work = new ArrayList<>();
+        List<Integer> poss = find_states(states, current_state);
+        List<Integer> states_that_work = new ArrayList<>();
         Boolean pass;
         for (int j = 0; j < poss.size(); j++) {
             pass = true;
@@ -73,9 +75,10 @@ public class Execution implements Serializable {
         }
         return states_that_work;
     }
-    public ArrayList<Integer> compare(ArrayList<Integer> states_that_work) {
+
+    public List<Integer> compare(List<Integer> states_that_work) {
         int k;
-        ArrayList<Integer> integers = new ArrayList<>(), states_to_return = new ArrayList<>();
+        List<Integer> integers = new ArrayList<>(), states_to_return = new ArrayList<>();
         for (int i = 0; i < states_that_work.size(); i++) {
             k = 0;
             for (int j = 0; j < tapes_with_content.size(); j++) {
@@ -98,7 +101,8 @@ public class Execution implements Serializable {
         }
         return states_to_return;
     }
-    public void _execute(Integer state_index) {
+
+    public void execute(Integer state_index) {
         for (int i = 0; i < tapes_with_content.size(); i++) {
             modifyContent(i, Character.toString(write.get(state_index).charAt(i)));
             move(i, Character.toString(move.get(state_index).charAt(i)));
