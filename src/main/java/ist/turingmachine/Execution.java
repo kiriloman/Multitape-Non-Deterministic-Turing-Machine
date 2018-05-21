@@ -17,19 +17,19 @@ public class Execution implements Serializable {
     public void modifyContent(Integer tape_num, String modifier) {
         if (!modifier.equals("*")) {
             int h = tapes_with_content.get(tape_num).getHead();
-            tapes_with_content.get(tape_num).content.remove(h);
-            tapes_with_content.get(tape_num).content.add(h, modifier);
+            tapes_with_content.get(tape_num).getContent().remove(h);
+            tapes_with_content.get(tape_num).getContent().add(h, modifier);
         }
     }
     public void move(Integer tape_num, String direction) {
         int h = tapes_with_content.get(tape_num).getHead();
         if (h == tapes_with_content.get(tape_num).getContent().size() - 1 && direction.toLowerCase().equals("r")) {
-            tapes_with_content.get(tape_num).content.add("_");
+            tapes_with_content.get(tape_num).getContent().add("_");
             tapes_with_content.get(tape_num).setHead(h + 1);
         }
         else {
             if (h == 0 && direction.toLowerCase().equals("l")) {
-                tapes_with_content.get(tape_num).content.add(0, "_");
+                tapes_with_content.get(tape_num).getContent().add(0, "_");
             }
             else {
                 if (direction.toLowerCase().equals("r")) {
