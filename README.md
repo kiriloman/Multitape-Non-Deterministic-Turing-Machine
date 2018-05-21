@@ -5,7 +5,7 @@ An ```accept state``` seeking multitape non deterministic Turing machine simulat
 To obtain a copy of the simulator just download Turing Machine.jar
 
 ### Prerequisites
-* [Java 8] (http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
+* [Java 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
 
 ### Usage
 To open the simulator:
@@ -30,7 +30,7 @@ Use ```_``` to represent spaces, and ```*``` instead of a character read to mean
 This simulator needs a program and a certain amount of tapes. The number of tapes depends on the program. 
 When opened the simulator shows a GUI where you will be working.
 
-![Alt text](Images/turingmachine.png?raw=true)
+![Alt text](images/turingmachine.png?raw=true)
 
 ### Meanings
 
