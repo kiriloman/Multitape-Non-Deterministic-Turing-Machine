@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="609bfe9f-8480-4be6-a79e-4a9f0acdbc28" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/Multitape-Non-Deterministic-Turing-Machine/ist/turingmachine/Tape.class" afterPath="$PROJECT_DIR$/out/production/Multitape-Non-Deterministic-Turing-Machine/ist/turingmachine/Tape.class" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ist/turingmachine/Execution.java" afterPath="$PROJECT_DIR$/src/main/java/ist/turingmachine/Execution.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ist/turingmachine/TM_Run.java" afterPath="$PROJECT_DIR$/src/main/java/ist/turingmachine/TM_Run.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ist/turingmachine/Tape.java" afterPath="$PROJECT_DIR$/src/main/java/ist/turingmachine/Tape.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -54,7 +50,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Execution.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Execution.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ist/turingmachine/Execution.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-735">
@@ -64,6 +60,16 @@
                 <element signature="e#722#723#0" expanded="true" />
                 <element signature="e#750#751#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -110,6 +116,7 @@
         <option value="$PROJECT_DIR$/src/main/java/ist/turingmachine/Execution.java" />
         <option value="$PROJECT_DIR$/src/main/java/ist/turingmachine/Tape.java" />
         <option value="$PROJECT_DIR$/src/main/java/ist/turingmachine/TM_Run.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -596,6 +603,14 @@
             <element signature="e#722#723#0" expanded="true" />
             <element signature="e#750#751#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
