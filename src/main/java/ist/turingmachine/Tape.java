@@ -3,7 +3,7 @@ package ist.turingmachine;
 import java.io.Serializable;
 import java.util.List;
 
-// Check whats up with id, REMOVE SERIALIZABLE
+//REMOVE SERIALIZABLE
 public class Tape implements Serializable {
     private Integer id;
     private List<String> content;
@@ -12,7 +12,6 @@ public class Tape implements Serializable {
 
     public Tape(Integer id) {
         this.id = id;
-        this.head = 0;
     }
 
     public void setHead(Integer head) {

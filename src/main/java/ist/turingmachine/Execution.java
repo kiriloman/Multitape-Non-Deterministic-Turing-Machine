@@ -22,7 +22,7 @@ public class Execution implements Serializable {
         return tapes;
     }
 
-    public void modifyContent(Integer tapeId, String newChar) {
+    private void modifyContent(Integer tapeId, String newChar) {
         if (!newChar.equals("*")) {
             int head = tapes.get(tapeId).getHead();
             tapes.get(tapeId).getContent().remove(head);
@@ -30,24 +30,24 @@ public class Execution implements Serializable {
         }
     }
 
-    //switch somehow
     public void move(Integer tapeId, String direction) {
         int head = tapes.get(tapeId).getHead();
-        if (head == tapes.get(tapeId).getContent().size() - 1 && direction.toLowerCase().equals("r")) {
-            tapes.get(tapeId).getContent().add("_");
-            tapes.get(tapeId).setHead(head + 1);
-        } else {
-            if (head == 0 && direction.toLowerCase().equals("l")) {
-                tapes.get(tapeId).getContent().add(0, "_");
-            } else {
-                if (direction.toLowerCase().equals("r")) {
+        switch (direction.toLowerCase()) {
+            case "r":
+                if (head == tapes.get(tapeId).getContent().size() - 1) {
+                    tapes.get(tapeId).getContent().add("_");
                     tapes.get(tapeId).setHead(head + 1);
-                } else {
-                    if (direction.toLowerCase().equals("l")) {
-                        tapes.get(tapeId).setHead(head - 1);
-                    }
+                    break;
                 }
-            }
+                tapes.get(tapeId).setHead(head + 1);
+                break;
+            case "l":
+                if (head == 0) {
+                    tapes.get(tapeId).getContent().add(0, "_");
+                    break;
+                }
+                tapes.get(tapeId).setHead(head - 1);
+                break;
         }
     }
 
