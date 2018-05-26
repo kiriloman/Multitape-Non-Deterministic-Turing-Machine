@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+//TODO: Review for loops
 public class State implements Comparable<State> {
     private String name, read, write, move, nextState;
     private List<State> nextStates;
@@ -84,14 +85,14 @@ public class State implements Comparable<State> {
 
     @Override
     public int compareTo(State o) {
-        int thisNumOfAsterisk = 0;
-        int otherNumOfAsterisk = 0;
+        int thisNumOfAsterisks = 0;
+        int otherNumOfAsterisks = 0;
         for (int i = 0; i < read.length(); i++) {
             if (read.charAt(i) == '*')
-                thisNumOfAsterisk++;
+                thisNumOfAsterisks++;
             if (o.read.charAt(i) == '*')
-                otherNumOfAsterisk++;
+                otherNumOfAsterisks++;
         }
-        return thisNumOfAsterisk - otherNumOfAsterisk;
+        return thisNumOfAsterisks - otherNumOfAsterisks;
     }
 }
