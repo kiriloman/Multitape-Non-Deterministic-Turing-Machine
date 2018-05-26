@@ -45,10 +45,6 @@ public class State implements Comparable<State> {
         }
     }
 
-    public List<State> getNextStates() {
-        return nextStates;
-    }
-
     public String getName() {
         return name;
     }
