@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TM_Run extends TM_Gui implements Runnable {
-    public static ArrayList<String> states, read, write, move, goToState;
-    public static ArrayList<Tape> tapes_with_content;
+    public static List<String> states, read, write, move, goToState;
+    public static List<Tape> tapes_with_content;
     public static int numpassos, number_of_tapes, decision_number, state_picked;
     public static boolean decisions_enabled;
     public static String decisions_string = "";
@@ -23,16 +23,16 @@ public class TM_Run extends TM_Gui implements Runnable {
         String codeInput = paneInput.getText();
         String str = "";
         BufferedReader reader = new BufferedReader(new StringReader(codeInput));
-        ArrayList<ArrayList<String>> tapes = new ArrayList<>();
+        ArrayList<ArrayList<Character>> tapes = new ArrayList<>();
         try {
             str = reader.readLine();
-            ArrayList<String> inner;
+            ArrayList<Character> inner;
             while (str != null) {
                 if (!str.equals("Initial tapes here, one in each line")) {
                     paneTapesOutput.setText(paneTapesOutput.getText() + str + "\n");
                     inner = new ArrayList<>();
                     for (int i = 0; i < str.length(); i++) {
-                        inner.add(Character.toString(str.charAt(i)));
+                        inner.add(str.charAt(i));
                     }
                     tapes_with_content.add(new Tape(number_of_tapes));
                     number_of_tapes++;

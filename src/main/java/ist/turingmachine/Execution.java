@@ -3,15 +3,16 @@ package ist.turingmachine;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-//TODO: REMOVE SERIALIZABLE, review for loops (for each?)
+//TODO: REMOVE SERIALIZABLE, review for loops (for each?), review tapes creation
 public class Execution implements Serializable {
     private List<Tape> tapes;
     private List<State> states;
 
-    public Execution(List<Tape> tapes, List<String> states) {
-        this.tapes = tapes;
+    public Execution(List<String> tapes, List<String> states) {
         createStates(states);
+        createTapes(tapes);
     }
 
     private void createStates(List<String> states) {
@@ -21,6 +22,18 @@ public class Execution implements Serializable {
         }
         for (int i = 0; i < this.states.size(); i++) {
             this.states.get(i).setNextStates(this.states);
+        }
+    }
+
+    private void createTapes(List<String> tapes) {
+        this.tapes = new ArrayList<>();
+        Tape tape;
+        for (int i = 0; i < tapes.size(); i++) {
+            tape = new Tape(i);
+            tape.setHead(0);
+            tape.setState(states.get(0));
+            //Review
+            tape.setContent(tapes.get(i).chars().mapToObj(e -> (char) e).collect(Collectors.toList()));
         }
     }
 
