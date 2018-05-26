@@ -1,10 +1,11 @@
 package ist.turingmachine;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class State {
-    private String name, read, write, nextState;
+public class State implements Comparable<State> {
+    private String name, read, write, move, nextState;
     private List<State> nextStates;
 
     public State(String state) {
@@ -12,11 +13,30 @@ public class State {
         name = partsOfState[0];
         read = partsOfState[1];
         write = partsOfState[2];
-        nextState = partsOfState[3];
+        move = partsOfState[3];
+        nextState = partsOfState[4];
         nextStates = new ArrayList<>();
     }
 
-    private void setNextStates(List<State> states) {
+    public List<State> getExecutableNextStates(List<Tape> tapes) {
+        List<State> executableStates = new ArrayList<>();
+        boolean pass;
+        for (int j = 0; j < nextStates.size(); j++) {
+            pass = true;
+            for (int i = 0; i < tapes.size() && pass; i++) {
+                if (!(read.charAt(i) == '*' || tapes.get(i).getHeadContent() == read.charAt(i))) {
+                    pass = false;
+                }
+            }
+            if (pass) {
+                executableStates.add(nextStates.get(j));
+            }
+        }
+        Collections.sort(executableStates);
+        return executableStates;
+    }
+
+    public void setNextStates(List<State> states) {
         nextStates = new ArrayList<>();
         for (int i = 0; i < states.size(); i++) {
             if (states.get(i).name.equals(nextState)) {
@@ -41,13 +61,17 @@ public class State {
         return write;
     }
 
+    public String getMove() {
+        return move;
+    }
+
     public String getNextState() {
         return nextState;
     }
 
     @Override
     public int hashCode() {
-        return 31 + name.hashCode() + read.hashCode() + write.hashCode() + nextState.hashCode();
+        return 31 + name.hashCode() + read.hashCode() + write.hashCode() + move.hashCode() + nextState.hashCode();
     }
 
     @Override
@@ -58,6 +82,20 @@ public class State {
         return (name.equals(other.name) &&
                 read.equals(other.read) &&
                 write.equals(other.write) &&
+                move.equals(other.move) &&
                 nextState.equals(other.nextState));
+    }
+
+    @Override
+    public int compareTo(State o) {
+        int thisNumOfAsterisk = 0;
+        int otherNumOfAsterisk = 0;
+        for (int i = 0; i < read.length(); i++) {
+            if (read.charAt(i) == '*')
+                thisNumOfAsterisk++;
+            if (o.read.charAt(i) == '*')
+                otherNumOfAsterisk++;
+        }
+        return thisNumOfAsterisk - otherNumOfAsterisk;
     }
 }

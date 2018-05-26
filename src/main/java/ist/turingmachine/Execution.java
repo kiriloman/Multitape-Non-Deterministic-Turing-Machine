@@ -4,38 +4,48 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: review, remove _, String -> char, find states into 1 method, REMOVE SERIALIZABLE
+//TODO: REMOVE SERIALIZABLE, review for loops (for each?)
 public class Execution implements Serializable {
     private List<Tape> tapes;
-    public List<String> states, read, write, move, goToNextState;
+    private List<State> states;
 
-    public Execution(List<Tape> tapes, List<String> states, List<String> read, List<String> write, List<String> move, List<String> goToNextState) {
+    public Execution(List<Tape> tapes, List<String> states) {
         this.tapes = tapes;
-        this.states = states;
-        this.read = read;
-        this.write = write;
-        this.move = move;
-        this.goToNextState = goToNextState;
+        createStates(states);
+    }
+
+    private void createStates(List<String> states) {
+        this.states = new ArrayList<>();
+        for (int i = 0; i < states.size(); i++) {
+            this.states.add(new State(states.get(i)));
+        }
+        for (int i = 0; i < this.states.size(); i++) {
+            this.states.get(i).setNextStates(this.states);
+        }
     }
 
     public List<Tape> getTapes() {
         return tapes;
     }
 
-    private void modifyContent(Integer tapeId, String newChar) {
-        if (!newChar.equals("*")) {
+    public List<State> getStates() {
+        return states;
+    }
+
+    private void modifyContent(Integer tapeId, State state) {
+        if (!state.getWrite().equals("*")) {
             int head = tapes.get(tapeId).getHead();
             tapes.get(tapeId).getContent().remove(head);
-            tapes.get(tapeId).getContent().add(head, newChar);
+            tapes.get(tapeId).getContent().add(head, state.getWrite().charAt(tapeId));
         }
     }
 
-    public void move(Integer tapeId, String direction) {
+    private void move(Integer tapeId, State state) {
         int head = tapes.get(tapeId).getHead();
-        switch (direction.toLowerCase()) {
+        switch (state.getMove().toLowerCase()) {
             case "r":
                 if (head == tapes.get(tapeId).getContent().size() - 1) {
-                    tapes.get(tapeId).getContent().add("_");
+                    tapes.get(tapeId).getContent().add('_');
                     tapes.get(tapeId).setHead(head + 1);
                     break;
                 }
@@ -43,7 +53,7 @@ public class Execution implements Serializable {
                 break;
             case "l":
                 if (head == 0) {
-                    tapes.get(tapeId).getContent().add(0, "_");
+                    tapes.get(tapeId).getContent().add(0, '_');
                     break;
                 }
                 tapes.get(tapeId).setHead(head - 1);
@@ -51,71 +61,14 @@ public class Execution implements Serializable {
         }
     }
 
-    public List<Integer> find_states(List<String> states, String current_state) {
-        List<Integer> possible_states_indexes = new ArrayList<>();
-        for (int i = 0; i < states.size(); i++) {
-            if (states.get(i).equals(current_state)) {
-                possible_states_indexes.add(i);
-            }
-        }
-        return possible_states_indexes;
-    }
-
-    public List<Integer> find_states_that_work() {
-        String current_state = tapes.get(0).getState();
-        List<Integer> poss = find_states(states, current_state);
-        List<Integer> states_that_work = new ArrayList<>();
-        Boolean pass;
-        for (int j = 0; j < poss.size(); j++) {
-            pass = true;
-            for (int i = 0; i < tapes.size() && pass; i++) {
-                if (!(read.get(poss.get(j)).charAt(i) == '*' || tapes.get(i).getContent().get(tapes.get(i).getHead()).equals(Character.toString(read.get(poss.get(j)).charAt(i))))) {
-                    pass = false;
-                }
-            }
-            if (pass) {
-                states_that_work.add(poss.get(j));
-            }
-        }
-        if (states_that_work.size() > 1) {
-            return compare(states_that_work);
-        }
-        return states_that_work;
-    }
-
-    public List<Integer> compare(List<Integer> states_that_work) {
-        int k;
-        List<Integer> integers = new ArrayList<>(), states_to_return = new ArrayList<>();
-        for (int i = 0; i < states_that_work.size(); i++) {
-            k = 0;
-            for (int j = 0; j < tapes.size(); j++) {
-                if (read.get(states_that_work.get(i)).charAt(j) == '*') {
-                    k++;
-                }
-            }
-            integers.add(k);
-        }
-        int smallest = integers.get(0);
-        for (int i = 1; i < integers.size(); i++) {
-            if (integers.get(i) < smallest) {
-                smallest = integers.get(i);
-            }
-        }
-        for (int i = 0; i < integers.size(); i++) {
-            if (integers.get(i) == smallest) {
-                states_to_return.add(states_that_work.get(i));
-            }
-        }
-        return states_to_return;
-    }
-
-    //for?
-    public void execute(Integer index) {
+    public void execute(State state) {
+        List<State> executableNextStates;
         for (int i = 0; i < tapes.size(); i++) {
-            modifyContent(i, Character.toString(write.get(index).charAt(i)));
-            move(i, Character.toString(move.get(index).charAt(i)));
-            if (goToNextState.size() > index && goToNextState.get(index) != null) {
-                tapes.get(i).setState(goToNextState.get(index));
+            modifyContent(i, state);
+            move(i, state);
+            executableNextStates = state.getExecutableNextStates(tapes);
+            if (executableNextStates.size() != 0 && executableNextStates.get(0) != null) {
+                tapes.get(i).setState(executableNextStates.get(0));
             }
         }
     }

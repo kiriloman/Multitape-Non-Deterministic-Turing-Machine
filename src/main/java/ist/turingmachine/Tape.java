@@ -6,9 +6,9 @@ import java.util.List;
 //REMOVE SERIALIZABLE
 public class Tape implements Serializable {
     private Integer id;
-    private List<String> content;
+    private List<Character> content;
     private Integer head;
-    private String state;
+    private State state;
 
     public Tape(Integer id) {
         this.id = id;
@@ -22,19 +22,23 @@ public class Tape implements Serializable {
         return head;
     }
 
-    public void setContent(List<String> content) {
+    public void setContent(List<Character> content) {
         this.content = content;
     }
 
-    public List<String> getContent() {
+    public List<Character> getContent() {
         return content;
     }
 
-    public void setState(String state) {
+    public char getHeadContent() {
+        return content.get(head);
+    }
+
+    public void setState(State state) {
         this.state = state;
     }
 
-    public String getState() {
+    public State getState() {
         return state;
     }
 
