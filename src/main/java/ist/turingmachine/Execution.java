@@ -18,12 +18,10 @@ public class Execution implements Serializable {
         this.goToNextState = goToNextState;
     }
 
-    //+
     public List<Tape> getTapes() {
         return tapes;
     }
 
-    //+
     public void modifyContent(Integer tapeId, String newChar) {
         if (!newChar.equals("*")) {
             int head = tapes.get(tapeId).getHead();

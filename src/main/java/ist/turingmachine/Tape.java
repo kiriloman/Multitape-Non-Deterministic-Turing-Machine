@@ -3,7 +3,7 @@ package ist.turingmachine;
 import java.io.Serializable;
 import java.util.List;
 
-// Check whats up with id. implement equals hashcode maybe, REMOVE SERIALIZABLE
+// Check whats up with id, REMOVE SERIALIZABLE
 public class Tape implements Serializable {
     private Integer id;
     private List<String> content;
@@ -37,5 +37,18 @@ public class Tape implements Serializable {
 
     public String getState() {
         return state;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 + id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (!(o instanceof Tape)) return false;
+        Tape other = (Tape) o;
+        return id == other.id;
     }
 }
