@@ -12,6 +12,7 @@ public class TM_Run extends TM_Gui implements Runnable {
     public static int numpassos, number_of_tapes, decision_number, state_picked;
     public static boolean decisions_enabled;
     public static String decisions_string = "";
+
     @Override
     public void run() {
         tapes_with_content = new ArrayList<>();
@@ -27,17 +28,17 @@ public class TM_Run extends TM_Gui implements Runnable {
             str = reader.readLine();
             ArrayList<String> inner;
             while (str != null) {
-            	if (!str.equals("Initial tapes here, one in each line")) {
-	            	paneTapesOutput.setText(paneTapesOutput.getText() + str + "\n");
-	                inner = new ArrayList<>();
-	                for (int i = 0; i < str.length(); i++) {
-	                	inner.add(Character.toString(str.charAt(i)));
-	                }
-	                tapes_with_content.add(new Tape(number_of_tapes));
-	                number_of_tapes++;
-	                tapes.add(inner);
-            	}
-            	str = reader.readLine();
+                if (!str.equals("Initial tapes here, one in each line")) {
+                    paneTapesOutput.setText(paneTapesOutput.getText() + str + "\n");
+                    inner = new ArrayList<>();
+                    for (int i = 0; i < str.length(); i++) {
+                        inner.add(Character.toString(str.charAt(i)));
+                    }
+                    tapes_with_content.add(new Tape(number_of_tapes));
+                    number_of_tapes++;
+                    tapes.add(inner);
+                }
+                str = reader.readLine();
             }
         } catch (IOException e1) {
 
@@ -57,17 +58,17 @@ public class TM_Run extends TM_Gui implements Runnable {
                 str = str.replaceAll("\\s+", " ").trim();
                 parts = str.split(" ");
                 if (!str.equals("") && !parts[0].startsWith(";")) {
-                	if (parts.length >= 5) {
-	                    states.add(parts[0]);
-	                    read.add(parts[1]);
-	                    write.add(parts[2]);
-	                    move.add(parts[3]);
-	                    goToState.add(parts[4]);
-	                    System.out.println(parts[4].length() + " " + parts[4]);
-                	}
+                    if (parts.length >= 5) {
+                        states.add(parts[0]);
+                        read.add(parts[1]);
+                        write.add(parts[2]);
+                        move.add(parts[3]);
+                        goToState.add(parts[4]);
+                        System.out.println(parts[4].length() + " " + parts[4]);
+                    }
                     else {
-                    	paneTapesOutput.setText(paneTapesOutput.getText() + "\n" + str + " does not have the right number of read/write/move.");
-                    	paneLog.setFocusable(true);
+                        paneTapesOutput.setText(paneTapesOutput.getText() + "\n" + str + " does not have the right number of read/write/move.");
+                        paneLog.setFocusable(true);
                         NonDeterministicField.setFocusable(true);
                         step.setEnabled(true);
                         run_used = false;
@@ -75,7 +76,7 @@ public class TM_Run extends TM_Gui implements Runnable {
                         reset_used = false;
                         paneLog.setCaretPosition(paneLog.getDocument().getLength());
                         choose_steps.setEnabled(true);
-                    	return;
+                        return;
                     }
                 }
                 str = reader_com.readLine();
@@ -83,7 +84,7 @@ public class TM_Run extends TM_Gui implements Runnable {
         } catch (IOException e1) {
 
         }
-        
+
         if (states.size() != 0) {
             for (int i = 0; i < tapes_with_content.size(); i++) {
                 tapes_with_content.get(i).setContent(tapes.get(i));
@@ -91,27 +92,27 @@ public class TM_Run extends TM_Gui implements Runnable {
                 tapes_with_content.get(i).setState(states.get(0));
             }
             if (read.get(0).length() > number_of_tapes) {
-            	System.out.println("in");
-            	int diff = read.get(0).length() - number_of_tapes;
-            	ArrayList<String> aux;
-            	
-            	for (int i = 0; i < diff; i++) {
-            		aux = new ArrayList<>();
-            		aux.add("_");
-            		number_of_tapes++;
-            		System.out.println("in2");
-            		paneTapesOutput.setText(paneTapesOutput.getText() + "_" + "\n");
-            		tapes_with_content.add(new Tape(number_of_tapes));
-            		tapes_with_content.get(number_of_tapes - 1).setContent(aux);
+                System.out.println("in");
+                int diff = read.get(0).length() - number_of_tapes;
+                ArrayList<String> aux;
+
+                for (int i = 0; i < diff; i++) {
+                    aux = new ArrayList<>();
+                    aux.add("_");
+                    number_of_tapes++;
+                    System.out.println("in2");
+                    paneTapesOutput.setText(paneTapesOutput.getText() + "_" + "\n");
+                    tapes_with_content.add(new Tape(number_of_tapes));
+                    tapes_with_content.get(number_of_tapes - 1).setContent(aux);
                     tapes_with_content.get(number_of_tapes - 1).setHead(0);
                     tapes_with_content.get(number_of_tapes - 1).setState(states.get(0));
-            	}
+                }
             }
         }
         else {
             paneTapesOutput.setText(paneTapesOutput.getText() + "\n" + "You forgot the program.");
         }
-        
+
         if (!paneTapesOutput.getText().equals("")) {
             try {
                 String content = paneTapesOutput.getDocument().getText(0, paneTapesOutput.getDocument().getLength());
@@ -122,10 +123,10 @@ public class TM_Run extends TM_Gui implements Runnable {
             }
         }
         System.out.println("sdla");
-        
+
         System.out.println(check_coherence());
         if (check_coherence()) {
-        	System.out.println("checked");	
+            System.out.println("checked");
             if (!NonDeterministicField.getText().equals("") && !NonDeterministicField.getText().equals("Decision Sequence")) {
                 decision_number = 0;
                 decisions_enabled = true;

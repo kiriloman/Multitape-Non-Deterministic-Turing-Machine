@@ -1,9 +1,10 @@
 package ist.turingmachine;
 
+import java.io.Serializable;
 import java.util.List;
 
-// Check whats up with id. implement equals hashcode maybe
-public class Tape {
+// Check whats up with id. implement equals hashcode maybe, REMOVE SERIALIZABLE
+public class Tape implements Serializable {
     private Integer id;
     private List<String> content;
     private Integer head;

@@ -1,10 +1,11 @@
 package ist.turingmachine;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: review, remove _, String -> char, find states into 1 method
-public class Execution {
+//TODO: review, remove _, String -> char, find states into 1 method, REMOVE SERIALIZABLE
+public class Execution implements Serializable {
     private List<Tape> tapes;
     public List<String> states, read, write, move, goToNextState;
 
