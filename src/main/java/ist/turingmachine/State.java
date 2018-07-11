@@ -1,11 +1,12 @@
 package ist.turingmachine;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//TODO: Review for loops
-public class State implements Comparable<State> {
+//TODO: Review for loops, REMOVE SERIALIZABLE
+public class State implements Comparable<State>, Serializable {
     private String name, read, write, move, nextState;
     private List<State> nextStates;
 
@@ -19,6 +20,7 @@ public class State implements Comparable<State> {
         nextStates = new ArrayList<>();
     }
 
+    //review (inutil?)
     public List<State> getExecutableNextStates(List<Tape> tapes) {
         List<State> executableStates = new ArrayList<>();
         boolean pass;
@@ -34,6 +36,7 @@ public class State implements Comparable<State> {
             }
         }
         Collections.sort(executableStates);
+        System.out.println(executableStates.toString() + " exeuSTATES");
         return executableStates;
     }
 
@@ -94,5 +97,10 @@ public class State implements Comparable<State> {
                 otherNumOfAsterisks++;
         }
         return thisNumOfAsterisks - otherNumOfAsterisks;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + read + " " + write + " " + move + " " + nextState;
     }
 }

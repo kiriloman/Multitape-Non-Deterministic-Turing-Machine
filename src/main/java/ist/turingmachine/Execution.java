@@ -1,40 +1,31 @@
 package ist.turingmachine;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-//TODO: REMOVE SERIALIZABLE, review for loops (for each?), review tapes creation
+//TODO: REMOVE SERIALIZABLE, review for loops (for each?)
 public class Execution implements Serializable {
     private List<Tape> tapes;
     private List<State> states;
 
-    public Execution(List<String> tapes, List<String> states) {
-        createStates(states);
-        createTapes(tapes);
+    public Execution(List<Tape> tapes, List<State> states) {
+        this.states = states;
+        this.tapes = tapes;
     }
 
-    private void createStates(List<String> states) {
-        this.states = new ArrayList<>();
+    // maybe begin always on the first state?
+    private State getInitialState() {
+        boolean searching;
         for (int i = 0; i < states.size(); i++) {
-            this.states.add(new State(states.get(i)));
+            searching = true;
+            for (int j = 0; j < tapes.size() && searching; j++) {
+                if (states.get(i).getRead().charAt(j) != tapes.get(j).getHeadContent())
+                    searching = false;
+            }
+            if (searching)
+                return states.get(i);
         }
-        for (int i = 0; i < this.states.size(); i++) {
-            this.states.get(i).setNextStates(this.states);
-        }
-    }
-
-    private void createTapes(List<String> tapes) {
-        this.tapes = new ArrayList<>();
-        Tape tape;
-        for (int i = 0; i < tapes.size(); i++) {
-            tape = new Tape(i);
-            tape.setHead(0);
-            tape.setState(states.get(0));
-            //Review
-            tape.setContent(tapes.get(i).chars().mapToObj(e -> (char) e).collect(Collectors.toList()));
-        }
+        return null;
     }
 
     public List<Tape> getTapes() {

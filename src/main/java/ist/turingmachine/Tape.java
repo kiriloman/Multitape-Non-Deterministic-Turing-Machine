@@ -8,7 +8,6 @@ public class Tape implements Serializable {
     private Integer id;
     private List<Character> content;
     private Integer head;
-    private State state;
 
     public Tape(Integer id) {
         this.id = id;
@@ -34,14 +33,6 @@ public class Tape implements Serializable {
         return content.get(head);
     }
 
-    public void setState(State state) {
-        this.state = state;
-    }
-
-    public State getState() {
-        return state;
-    }
-
     @Override
     public int hashCode() {
         return 31 + id;
@@ -53,5 +44,10 @@ public class Tape implements Serializable {
         if (!(o instanceof Tape)) return false;
         Tape other = (Tape) o;
         return id == other.id;
+    }
+
+    @Override
+    public String toString() {
+        return "[ID: " + id + ", Head: " + head + ", State: " + state + "]";
     }
 }
