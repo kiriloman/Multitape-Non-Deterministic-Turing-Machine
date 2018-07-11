@@ -40,13 +40,8 @@ public class State implements Comparable<State>, Serializable {
         return executableStates;
     }
 
-    public void setNextStates(List<State> states) {
-        nextStates = new ArrayList<>();
-        for (int i = 0; i < states.size(); i++) {
-            if (states.get(i).name.equals(nextState)) {
-                nextStates.add(states.get(i));
-            }
-        }
+    public void setNextStates(List<State> nextStates) {
+        this.nextStates = nextStates;
     }
 
     public String getName() {

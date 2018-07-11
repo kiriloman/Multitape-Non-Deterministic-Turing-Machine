@@ -48,6 +48,6 @@ public class Tape implements Serializable {
 
     @Override
     public String toString() {
-        return "[ID: " + id + ", Head: " + head + ", State: " + state + "]";
+        return "[ID: " + id + ", Head: " + head + "]";
     }
 }
