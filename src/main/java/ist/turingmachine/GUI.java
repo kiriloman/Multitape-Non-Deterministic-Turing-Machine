@@ -10,28 +10,28 @@ import java.awt.event.*;
 import java.io.*;
 
 public class GUI {
-    public static boolean paused = false, stepped = false, step_used = false, run_used = false, reset_used = false;
-    public static JFrame frame;
-    public static JPanel panelMain = new JPanel(), panelCode = new JPanel(), panelInput = new JPanel(), panelTapes = new JPanel(new BorderLayout()), controlPanel = new JPanel(), panelMother = new JPanel(), panelSaveOpen = new JPanel(), panelNonDeterministic = new JPanel(), panelSyntax = new JPanel(), panelProgram = new JPanel(), panelCodeInput = new JPanel();
-    public static JScrollPane scrollPane, inputScrollPane, frameScroll, logScroll, outputScroll;
-    public static JTextArea paneCode, paneInput, paneSyntax, paneLog;
-    public static JButton decisionButton = new JButton(">"), clear = new JButton("Clear"), run = new JButton("Run"), pause = new JButton("Pause"), step = new JButton("Step"), reset = new JButton("Set"), open = new JButton("Open"), save = new JButton("Save");
-    public static JCheckBox run_faster = new JCheckBox("Run at full speed"), choose_steps = new JCheckBox("I decide");
-    public static JSplitPane splitter, splitCode;
-    public static JLabel counterField = new JLabel("0", SwingConstants.CENTER), counterLabelField = new JLabel("Steps", SwingConstants.CENTER);
-    public static JTextField NonDeterministicField = new JTextField();
-    public static JFileChooser fileChooser = new JFileChooser();
-    public static JPopupMenu popup = new JPopupMenu();
-    public static JOptionPane optionPane;
-    public static JMenuItem item;
-    public static DefaultCaret logCaret;
-    public static JTextPane paneTapesOutput = new JTextPane(), decisionSequenceDescription = new JTextPane();
-    public static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 15), monospaced = new Font(Font.MONOSPACED, Font.PLAIN, 14), syntax = new Font(Font.SERIF, Font.PLAIN, 11), NonDeterministicFont = new Font(font.MONOSPACED, Font.PLAIN, 20);
-    public static Highlighter highlighter = paneTapesOutput.getHighlighter(), highlighter_decisions = NonDeterministicField.getHighlighter();
-    public static Highlighter.HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(Color.pink);
-    public static Thread t = new Thread();
+    public boolean paused = false, stepped = false, step_used = false, run_used = false, reset_used = false;
+    public JFrame frame;
+    public JPanel panelMain = new JPanel(), panelCode = new JPanel(), panelInput = new JPanel(), panelTapes = new JPanel(new BorderLayout()), controlPanel = new JPanel(), panelMother = new JPanel(), panelSaveOpen = new JPanel(), panelNonDeterministic = new JPanel(), panelSyntax = new JPanel(), panelProgram = new JPanel(), panelCodeInput = new JPanel();
+    public JScrollPane scrollPane, inputScrollPane, frameScroll, logScroll, outputScroll;
+    public JTextArea paneCode, paneInput, paneSyntax, paneLog;
+    public JButton decisionButton = new JButton(">"), clear = new JButton("Clear"), run = new JButton("Run"), pause = new JButton("Pause"), step = new JButton("Step"), reset = new JButton("Set"), open = new JButton("Open"), save = new JButton("Save");
+    public JCheckBox run_faster = new JCheckBox("Run at full speed"), choose_steps = new JCheckBox("I decide");
+    public JSplitPane splitter, splitCode;
+    public JLabel counterField = new JLabel("0", SwingConstants.CENTER), counterLabelField = new JLabel("Steps", SwingConstants.CENTER);
+    public JTextField NonDeterministicField = new JTextField();
+    public JFileChooser fileChooser = new JFileChooser();
+    public JPopupMenu popup = new JPopupMenu();
+    public JOptionPane optionPane;
+    public JMenuItem item;
+    public DefaultCaret logCaret;
+    public JTextPane paneTapesOutput = new JTextPane(), decisionSequenceDescription = new JTextPane();
+    public Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 15), monospaced = new Font(Font.MONOSPACED, Font.PLAIN, 14), syntax = new Font(Font.SERIF, Font.PLAIN, 11), NonDeterministicFont = new Font(font.MONOSPACED, Font.PLAIN, 20);
+    public Highlighter highlighter = paneTapesOutput.getHighlighter(), highlighter_decisions = NonDeterministicField.getHighlighter();
+    public Highlighter.HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(Color.pink);
+    public Thread t = new Thread();
 
-    public static void Prepare() {
+    public void Prepare() {
         frame = new JFrame("Turing Machine");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -205,7 +205,7 @@ public class GUI {
     }
 
 
-    public static void Props() {
+    public void Props() {
     	decisionButton.addActionListener(e -> {
     		if (!NonDeterministicField.getSize().equals(new Dimension(0, 0))){
     			decisionSequenceDescription.setVisible(true);
