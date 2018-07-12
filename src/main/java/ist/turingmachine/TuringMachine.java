@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TuringMachine extends TM_Gui implements Runnable {
+public class TuringMachine extends GUI implements Runnable {
     private List<Tape> tapes;
     private List<State> states;
     private int numOfSteps, numOfTapes, decisionNumber;

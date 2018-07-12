@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
-public class TM_Gui {
+public class GUI {
     public static boolean paused = false, stepped = false, step_used = false, run_used = false, reset_used = false;
     public static JFrame frame;
     public static JPanel panelMain = new JPanel(), panelCode = new JPanel(), panelInput = new JPanel(), panelTapes = new JPanel(new BorderLayout()), controlPanel = new JPanel(), panelMother = new JPanel(), panelSaveOpen = new JPanel(), panelNonDeterministic = new JPanel(), panelSyntax = new JPanel(), panelProgram = new JPanel(), panelCodeInput = new JPanel();
