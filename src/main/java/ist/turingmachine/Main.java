@@ -1,9 +1,9 @@
 package ist.turingmachine;
 
 //TODO: chars and not strings, packages
-public class Main extends GUI {
+//TODO: dont extend GUI
+public class Main {
     public static void main(String[] args) {
-        Prepare();
-        Props();
+        new Thread(new TuringMachine()).run();
     }
 }
