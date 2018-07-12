@@ -14,6 +14,7 @@ public class TuringMachine implements Runnable {
     private boolean decisionEnabled;
     private String decisionString;
     private GUI gui;
+    private Parser parser;
 
     TuringMachine() {
         tapes = new ArrayList<>();
@@ -22,17 +23,13 @@ public class TuringMachine implements Runnable {
         numOfTapes = 0;
         decisionString = "";
         gui = new GUI();
+        parser = new Parser();
         gui.Prepare();
         gui.Props();
     }
 
-
-    private Tape createTape(String content) {
-        Tape tape = new Tape(numOfTapes);
-        tape.setContent(content.chars().mapToObj(e -> (char) e).collect(Collectors.toList()));
-        tape.setHead(0);
-        numOfTapes++;
-        return tape;
+    private void outputTapes() {
+        gui.paneTapesOutput.setText(gui.paneInput.getText()); // newline?
     }
 
     //initializations to constructor
@@ -40,38 +37,13 @@ public class TuringMachine implements Runnable {
     public void run() {
         gui.paneLog.setText("");
         gui.paneTapesOutput.setText("");
-        String codeInput = gui.paneInput.getText();
-        String str;
-        BufferedReader reader = new BufferedReader(new StringReader(codeInput));
-        //Lê e cria tapes
-        try {
-            str = reader.readLine();
-            if (str != null && !str.equals("Initial tapes here, one in each line")) {
-                gui.paneTapesOutput.setText(gui.paneTapesOutput.getText() + str + "\n"); //maybe no \n
-                while (str != null) {
-                    tapes.add(createTape(str));
-                    str = reader.readLine();
-                }
-            }
-        } catch (IOException e1) {
-            System.out.println("Failed to create tapes.");
-        }
 
-        String codeCommands = gui.paneCode.getText();
-        BufferedReader programReader = new BufferedReader(new StringReader(codeCommands));
-        //Lê o programa e cria states
-        try {
-            str = programReader.readLine();
-            while (str != null) {
-                str = str.trim();
-                if (!str.equals("") && !str.startsWith(";")) {
-                    states.add(new State(str));
-                }
-                str = programReader.readLine();
-            }
-        } catch (IOException e1) {
-            System.out.println("Failed to create states.");
-        }
+        tapes = parser.parseTapes(gui.paneInput.getText());
+        numOfTapes = tapes.size();
+        outputTapes();
+
+        states = parser.readStates(gui.paneCode.getText());
+
 
         if (states.size() != 0) {
             if (states.get(0).getRead().length() > numOfTapes) {
