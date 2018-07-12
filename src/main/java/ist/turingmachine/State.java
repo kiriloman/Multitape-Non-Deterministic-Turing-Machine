@@ -36,7 +36,6 @@ public class State implements Comparable<State>, Serializable {
             }
         }
         Collections.sort(executableStates);
-        System.out.println(executableStates.toString() + " exeuSTATES");
         return executableStates;
     }
 

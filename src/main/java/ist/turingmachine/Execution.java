@@ -13,32 +13,45 @@ import java.util.List;
 public class Execution implements Serializable {
     private List<Tape> tapes;
     private List<State> states;
-    private State state;
+    private State currentState;
 
     public Execution(List<Tape> tapes, List<State> states) {
         this.states = states;
         this.tapes = tapes;
-        state = getInitialState();
+        currentState = null;
         for (State state : states) {
             state.setNextStates(findNextStates(states, state));
         }
     }
-
-    // maybe begin always on the first state? YES
-    private State getInitialState() {
-        boolean searching;
-        for (State state : states) {
-            searching = true;
-            for (int j = 0; j < tapes.size() && searching; j++) {
-                if (state.getRead().charAt(j) != '*' && state.getRead().charAt(j) != tapes.get(j).getHeadContent())
-                    searching = false;
-            }
-            if (searching)
-                return state;
+/*
+    public List<State> getExecutableStates() {
+        if (state == null) {
+            return getInitialStates();
         }
-        return null;
+        return state.getExecutableNextStates(tapes);
     }
 
+    // maybe begin always on the first state? YES // refactor
+    private List<State> getInitialStates() {
+        String firstStateName = states.get(0).getName();
+        List<State> possibleInitialStates = new ArrayList<>();
+        boolean found;
+        for (State state : states) {
+            if (!state.getName().equals(firstStateName))
+                return possibleInitialStates;
+            found = true;
+            for (int j = 0; j < tapes.size() && found; j++) {
+                if (state.getRead().charAt(j) != '*' && state.getRead().charAt(j) != tapes.get(j).getHeadContent()) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found)
+                possibleInitialStates.add(state);
+        }
+        return possibleInitialStates;
+    }
+*/
     private List<State> findNextStates(List<State> states, State state) {
         List<State> nextStates = new ArrayList<>();
         for (State nextState : states) {
@@ -57,7 +70,7 @@ public class Execution implements Serializable {
         return states;
     }
 
-    private void modifyContent(Integer tapeId) {
+    private void modifyContent(Integer tapeId, State state) {
         if (!state.getWrite().equals("*")) {
             int head = tapes.get(tapeId).getHead();
             tapes.get(tapeId).getContent().remove(head);
@@ -65,7 +78,7 @@ public class Execution implements Serializable {
         }
     }
 
-    private void move(Integer tapeId) {
+    private void move(Integer tapeId, State state) {
         int head = tapes.get(tapeId).getHead();
         switch (state.getMove().toLowerCase()) {
             case "r":
@@ -86,24 +99,26 @@ public class Execution implements Serializable {
         }
     }
 
-    public void execute() {
+    public void execute(State state) {
+        System.out.println(state.toString() + " executing this state");
         // executes current state
         for (int i = 0; i < tapes.size(); i++) {
-            modifyContent(i);
-            move(i);
+            modifyContent(i, state);
+            move(i, state);
         }
         // searches for next state
-        List<State> executableNextStates = state.getExecutableNextStates(tapes);
+        /*List<State> executableNextStates = state.getExecutableNextStates(tapes);
         if (executableNextStates.size() != 0 && executableNextStates.get(0) != null) {
             state = executableNextStates.get(0);
-        }
+        }*/
+        currentState = state;
     }
 
-    public State getState() {
-        return state;
+    public State getCurrentState() {
+        return currentState;
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void setCurrentState(State currentState) {
+        this.currentState = currentState;
     }
 }

@@ -501,7 +501,7 @@ public class TM_Gui {
             counterField.setText("0");
             step_used = false;
             reset_used = true;
-            t = new Thread(new TM_Run());
+            t = new Thread(new TuringMachine());
             t.start();
         });
         frame.pack();

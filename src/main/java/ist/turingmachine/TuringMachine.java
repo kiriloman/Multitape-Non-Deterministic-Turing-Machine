@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TM_Run extends TM_Gui implements Runnable {
+public class TuringMachine extends TM_Gui implements Runnable {
     public static List<Tape> tapes;
     public static List<State> states;
     public static int numpassos, number_of_tapes, decision_number, state_picked;
@@ -87,10 +87,12 @@ public class TM_Run extends TM_Gui implements Runnable {
         if (check_coherence()) {
             System.out.println("checked");
             if (!NonDeterministicField.getText().equals("") && !NonDeterministicField.getText().equals("Decision Sequence")) {
+                System.out.println("USING NON DETERMINISM");
                 decision_number = 0;
                 decisions_enabled = true;
                 decisions_string = NonDeterministicField.getText();
             } else {
+                System.out.println("NOT USING NON DETERMINISM");
                 NonDeterministicField.setText("");
                 decision_number = 0;
                 decisions_enabled = false;
@@ -117,7 +119,6 @@ public class TM_Run extends TM_Gui implements Runnable {
 
     private static void treeSearchV2(Execution execution) throws BadLocationException, InterruptedException {
         draw(execution);
-        //String last_state = "";
         State last_state = execution.getState();
         String state_to_queue = "";
         boolean no_chill;
@@ -132,11 +133,9 @@ public class TM_Run extends TM_Gui implements Runnable {
         queue.add("0");
         execution_clones.add(execution);
         chill();
-        List<Tape> executionTapes;
         while (queue.size() != 0) {
-            System.out.println(execution_clones.get(0).getState().toString() + " state");
-            executionTapes = execution_clones.get(0).getTapes();
-            if (execution_clones.get(0).getState().getExecutableNextStates(executionTapes).size() > 0) {
+            //System.out.println(execution_clones.get(0).getState().toString() + " state");
+            if (execution_clones.get(0).getExecutableStates().size() > 0) {
                 if (k == 1) {
                     k = 0;
                     no_chill = true;
@@ -168,9 +167,9 @@ public class TM_Run extends TM_Gui implements Runnable {
                     chill();
                     if (NonDeterministicField.getText().length() > decisions_string.length()) {
                         decisions_string = NonDeterministicField.getText();
-                        if (Character.getNumericValue(decisions_string.charAt(decision_number)) <= execution_clones.get(0).getState().getExecutableNextStates(executionTapes).size()) {
+                        if (Character.getNumericValue(decisions_string.charAt(decision_number)) <= execution_clones.get(0).getExecutableStates().size()) {
                             states_to_use = new ArrayList<>();
-                            states_to_use.add(execution_clones.get(0).getState().getExecutableNextStates(executionTapes).get(Character.getNumericValue(decisions_string.charAt(decision_number)) - 1));
+                            states_to_use.add(execution_clones.get(0).getExecutableStates().get(Character.getNumericValue(decisions_string.charAt(decision_number)) - 1));
                             decision_number++;
                         } else {
                             halt(execution_clones.get(execution_clones.size() - 1), last_state);
@@ -179,7 +178,7 @@ public class TM_Run extends TM_Gui implements Runnable {
                         }
                     } else {
                         decisions_enabled = false;
-                        states_to_use = execution_clones.get(0).getState().getExecutableNextStates(executionTapes);
+                        states_to_use = execution_clones.get(0).getExecutableStates();
                     }
                 } else {
                     highlight_decision(decision_number - 1);
@@ -187,9 +186,9 @@ public class TM_Run extends TM_Gui implements Runnable {
                         halt(execution_clones.get(execution_clones.size() - 1), last_state);
                         return;
                     }
-                    if (Character.getNumericValue(decisions_string.charAt(decision_number)) <= execution_clones.get(0).getState().getExecutableNextStates(executionTapes).size()) {
+                    if (Character.getNumericValue(decisions_string.charAt(decision_number)) <= execution_clones.get(0).getExecutableStates().size()) {
                         states_to_use = new ArrayList<>();
-                        states_to_use.add(execution_clones.get(0).getState().getExecutableNextStates(executionTapes).get(Character.getNumericValue(decisions_string.charAt(decision_number)) - 1));
+                        states_to_use.add(execution_clones.get(0).getExecutableStates().get(Character.getNumericValue(decisions_string.charAt(decision_number)) - 1));
                         decision_number++;
                     } else {
                         halt(execution_clones.get(0), null);
@@ -198,7 +197,7 @@ public class TM_Run extends TM_Gui implements Runnable {
                 }
             } else {
                 highlight_decision(decision_number - 1);
-                states_to_use = execution_clones.get(0).getState().getExecutableNextStates(executionTapes);
+                states_to_use = execution_clones.get(0).getExecutableStates();
             }
 
             if (step_used && (execution_clones.size() != 1 || no_chill)) {
@@ -206,6 +205,7 @@ public class TM_Run extends TM_Gui implements Runnable {
             }
 
             State statePicked;
+            System.out.println(states_to_use.toString() + " states to use");
             for (int i = 0; i < states_to_use.size(); i++) {
                 if (choose_steps.isSelected()) {
                     //create_dialog(states_to_use);
@@ -222,7 +222,7 @@ public class TM_Run extends TM_Gui implements Runnable {
                         l = i;
                 } else
                     l = i;
-                if (last_state.getNextState().equals("halt") || last_state.getNextState().equals("halt-accept")) {
+                if (last_state != null && (last_state.getNextState().equals("halt") || last_state.getNextState().equals("halt-accept"))) {
                     halt(execution_clones.get(execution_clones.size() - 1), last_state);
                     return;
                 }
@@ -257,8 +257,8 @@ public class TM_Run extends TM_Gui implements Runnable {
 
                 if (!marked_states.contains(state_to_queue)) {
                     paneLog.setText(paneLog.getText() + execution_clones.get(i + clone_number).getState().toString() + "\n");
-                    execution_clones.get(i + clone_number).setState(states_to_use.get(i));
-                    execution_clones.get(i + clone_number).execute();
+                    execution_clones.get(i + clone_number).execute(states_to_use.get(i));
+                    //execution_clones.get(i + clone_number).setState(states_to_use.get(i));
                     numpassos++;
                     draw(execution_clones.get(i + clone_number));
                     marked_states.add(state_to_queue);
@@ -274,8 +274,8 @@ public class TM_Run extends TM_Gui implements Runnable {
                 } else {
                     if (queue.contains(state_to_queue)) {
                         paneLog.setText(paneLog.getText() + execution_clones.get(i + clone_number).getState().toString() + "\n");
-                        execution_clones.get(i + clone_number).setState(states_to_use.get(i));
-                        execution_clones.get(i + clone_number).execute();
+                        execution_clones.get(i + clone_number).execute(states_to_use.get(i));
+                        //execution_clones.get(i + clone_number).setState(states_to_use.get(i));
                         numpassos++;
                         draw(execution_clones.get(i + clone_number));
                         if (state_to_queue.substring(1).length() > decisions_string.length() || (state_to_queue.substring(1).length() <= decisions_string.length() && !state_to_queue.substring(1).equals(decisions_string) && !state_to_queue.substring(1).equals("0") && !decisions_enabled)) {
@@ -366,8 +366,8 @@ public class TM_Run extends TM_Gui implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            execution.setState(halter);
-            execution.execute();
+            //execution.setState(halter);
+            execution.execute(halter);
             //paneLog.setText(paneLog.getText() + execution.getTapes().get(0).getState().toString() + "\n");
 
 
