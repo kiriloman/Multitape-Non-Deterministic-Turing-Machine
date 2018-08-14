@@ -8,7 +8,7 @@ import java.util.List;
 //TODO: Review for loops, REMOVE SERIALIZABLE
 public class State implements Comparable<State>, Serializable {
     private String name, read, write, move, nextState;
-    private List<State> nextStates;
+   // private List<State> nextStates;
 
     public State(String state) {
         String[] partsOfState = state.split(" ");
@@ -17,11 +17,11 @@ public class State implements Comparable<State>, Serializable {
         write = partsOfState[2];
         move = partsOfState[3];
         nextState = partsOfState[4];
-        nextStates = new ArrayList<>();
+       // nextStates = new ArrayList<>();
     }
 
     //review (inutil?)
-    public List<State> getExecutableNextStates(List<Tape> tapes) {
+    /*public List<State> getExecutableNextStates(List<Tape> tapes) {
         List<State> executableStates = new ArrayList<>();
         boolean pass;
         for (int j = 0; j < nextStates.size(); j++) {
@@ -37,11 +37,19 @@ public class State implements Comparable<State>, Serializable {
         }
         Collections.sort(executableStates);
         return executableStates;
+    }*/
+
+    /*public boolean isExecutable(List<Tape> tapes) {
+        for (int i = 0; i < tapes.size(); i++) {
+            if (read.charAt(i) != '*' && read.charAt(i) != tapes.get(i).getHeadContent())
+                return false;
+        }
+        return true;
     }
 
     public void setNextStates(List<State> nextStates) {
         this.nextStates = nextStates;
-    }
+    }*/
 
     public String getName() {
         return name;

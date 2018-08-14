@@ -2,57 +2,61 @@ package ist.turingmachine;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
-
-/**
- * Execution will save the state which it will execute next;
- */
-
 
 //TODO: REMOVE SERIALIZABLE, review for loops (for each?)
 public class Execution implements Serializable {
     private List<Tape> tapes;
     private List<State> states;
-    private State currentState;
+    private String currentStateName;
 
     public Execution(List<Tape> tapes, List<State> states) {
         this.states = states;
         this.tapes = tapes;
-        currentState = null;
-        for (State state : states) {
+        currentStateName = null;
+        /*for (State state : states) {
             state.setNextStates(findNextStates(states, state));
-        }
-    }
-/*
-    public List<State> getExecutableStates() {
-        if (state == null) {
-            return getInitialStates();
-        }
-        return state.getExecutableNextStates(tapes);
+        }*/
     }
 
-    // maybe begin always on the first state? YES // refactor
-    private List<State> getInitialStates() {
-        String firstStateName = states.get(0).getName();
-        List<State> possibleInitialStates = new ArrayList<>();
+    //encontra os estados executaveis
+    public List<State> findExecutableStates() {
+        List<State> nextStates = new ArrayList<>();
         boolean found;
         for (State state : states) {
-            if (!state.getName().equals(firstStateName))
-                return possibleInitialStates;
+            if (!state.getName().equals(currentStateName))
+                continue;
             found = true;
-            for (int j = 0; j < tapes.size() && found; j++) {
+            for (int j = 0; j < tapes.size(); j++) {
                 if (state.getRead().charAt(j) != '*' && state.getRead().charAt(j) != tapes.get(j).getHeadContent()) {
                     found = false;
                     break;
                 }
             }
             if (found)
-                possibleInitialStates.add(state);
+                nextStates.add(state);
         }
-        return possibleInitialStates;
+        Collections.sort(nextStates);
+        clean(nextStates);
+        return nextStates;
     }
-*/
-    private List<State> findNextStates(List<State> states, State state) {
+
+    private void clean(List<State> states) {
+        if (states.size() == 0 || states.get(0).getRead().equals("*"))
+            return;
+        else {
+            Iterator iterator = states.iterator();
+            while (iterator.hasNext()) {
+                State state = (State) iterator.next();
+                if (state.getRead().equals("*"))
+                    iterator.remove();
+            }
+        }
+    }
+
+    /*private List<State> findNextStates(List<State> states, State state) {
         List<State> nextStates = new ArrayList<>();
         for (State nextState : states) {
             if (nextState.getName().equals(state.getNextState())) {
@@ -60,7 +64,16 @@ public class Execution implements Serializable {
             }
         }
         return nextStates;
-    }
+    }*/
+
+    /*public List<State> possibleStates() {
+        List<State> possibleStates = new ArrayList<>();
+        for (State state : states) {
+            if (state.getName().equals(currentStateName) && state.isExecutable(tapes))
+                possibleStates.add(state);
+        }
+        return possibleStates;
+    }*/
 
     public List<Tape> getTapes() {
         return tapes;
@@ -111,14 +124,14 @@ public class Execution implements Serializable {
         if (executableNextStates.size() != 0 && executableNextStates.get(0) != null) {
             state = executableNextStates.get(0);
         }*/
-        currentState = state;
+        currentStateName = state.getNextState();
     }
 
-    public State getCurrentState() {
-        return currentState;
+    public String getCurrentStateName() {
+        return currentStateName;
     }
 
-    public void setCurrentState(State currentState) {
-        this.currentState = currentState;
+    public void setCurrentStateName(String currentStateName) {
+        this.currentStateName = currentStateName;
     }
 }

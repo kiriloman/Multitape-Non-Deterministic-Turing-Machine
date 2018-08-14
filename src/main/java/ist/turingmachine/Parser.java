@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class Parser {
 
-    public List<State> readStates(String input) {
+    public List<State> parseStates(String input) {
         List<State> states = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new StringReader(input));
         String line;
@@ -51,9 +51,7 @@ public class Parser {
     }
 
     private Tape createTape(String content, Integer tapeNumber) {
-        Tape tape = new Tape(tapeNumber);
-        tape.setContent(content.chars().mapToObj(e -> (char) e).collect(Collectors.toList()));
-        tape.setHead(0);
+        Tape tape = new Tape(tapeNumber, content.chars().mapToObj(e -> (char) e).collect(Collectors.toList()));
         return tape;
     }
 }

@@ -9,8 +9,10 @@ public class Tape implements Serializable {
     private List<Character> content;
     private Integer head;
 
-    public Tape(Integer id) {
+    public Tape(Integer id, List<Character> content) {
         this.id = id;
+        head = 0;
+        this.content = content;
     }
 
     public void setHead(Integer head) {
