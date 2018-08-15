@@ -53,14 +53,14 @@ public class TuringMachine implements Runnable {
         gui.paneLog.setCaretPosition(gui.paneLog.getDocument().getLength());
         gui.choose_steps.setEnabled(true);
     }
-
+    
     private void adjustNumOfTapes() {
         if (states.get(0).getRead().length() > tapes.size()) {
             int extraTapes = states.get(0).getRead().length() - tapes.size();
             Tape tape;
-            List<Character> content = new ArrayList<>();
-            content.add('_');
             for (int i = 0; i < extraTapes; i++) {
+                List<Character> content = new ArrayList<>();
+                content.add('_');
                 tape = new Tape(numOfTapes++, content);
                 tapes.add(tape);
             }
