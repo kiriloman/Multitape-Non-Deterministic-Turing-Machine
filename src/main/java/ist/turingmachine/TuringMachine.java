@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
+//TODO: ver os execution clones e ver forma diferente de te-los
 public class TuringMachine implements Runnable {
     private List<Tape> tapes;
     private List<State> states;
@@ -55,10 +56,12 @@ public class TuringMachine implements Runnable {
 
     private void adjustNumOfTapes() {
         if (states.get(0).getRead().length() > tapes.size()) {
-            int extraTapes = tapes.size() - states.get(0).getRead().length();
+            int extraTapes = states.get(0).getRead().length() - tapes.size();
             Tape tape;
+            List<Character> content = new ArrayList<>();
+            content.add('_');
             for (int i = 0; i < extraTapes; i++) {
-                tape = new Tape(numOfTapes++, new ArrayList<>('_'));
+                tape = new Tape(numOfTapes++, content);
                 tapes.add(tape);
             }
         }
@@ -78,7 +81,9 @@ public class TuringMachine implements Runnable {
 
         // Ajusta, se for necessario, o numero de tapes.
         if (states.size() != 0) {
+            System.out.println(tapes.toString());
             adjustNumOfTapes();
+            System.out.println(tapes.toString());
         } else {
             gui.paneTapesOutput.setText(gui.paneTapesOutput.getText() + "\n" + "You forgot the program.");
         }
@@ -99,11 +104,9 @@ public class TuringMachine implements Runnable {
         if (check_coherence()) {
             System.out.println("checked");
             if (!gui.NonDeterministicField.getText().equals("") && !gui.NonDeterministicField.getText().equals("Decision Sequence")) {
-                System.out.println("USING NON DETERMINISM");
                 decisionEnabled = true;
                 decisionString = gui.NonDeterministicField.getText();
             } else {
-                System.out.println("NOT USING NON DETERMINISM");
                 gui.NonDeterministicField.setText("");
                 decisionEnabled = false;
             }

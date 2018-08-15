@@ -11,8 +11,8 @@ public class Tape implements Serializable {
 
     public Tape(Integer id, List<Character> content) {
         this.id = id;
-        head = 0;
         this.content = content;
+        head = 0;
     }
 
     public void setHead(Integer head) {
@@ -50,6 +50,6 @@ public class Tape implements Serializable {
 
     @Override
     public String toString() {
-        return "[ID: " + id + ", Head: " + head + "]";
+        return "[ID: " + id + ", Head: " + head + ", Content: " + content + "]";
     }
 }

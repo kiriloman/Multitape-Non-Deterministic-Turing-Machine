@@ -84,7 +84,7 @@ public class Execution implements Serializable {
     }
 
     private void modifyContent(Integer tapeId, State state) {
-        if (!state.getWrite().equals("*")) {
+        if (state.getWrite().charAt(tapeId) != '*') {
             int head = tapes.get(tapeId).getHead();
             tapes.get(tapeId).getContent().remove(head);
             tapes.get(tapeId).getContent().add(head, state.getWrite().charAt(tapeId));
@@ -93,8 +93,8 @@ public class Execution implements Serializable {
 
     private void move(Integer tapeId, State state) {
         int head = tapes.get(tapeId).getHead();
-        switch (state.getMove().toLowerCase()) {
-            case "r":
+        switch (Character.toLowerCase(state.getMove().charAt(tapeId))) {
+            case 'r':
                 if (head == tapes.get(tapeId).getContent().size() - 1) {
                     tapes.get(tapeId).getContent().add('_');
                     tapes.get(tapeId).setHead(head + 1);
@@ -102,7 +102,7 @@ public class Execution implements Serializable {
                 }
                 tapes.get(tapeId).setHead(head + 1);
                 break;
-            case "l":
+            case 'l':
                 if (head == 0) {
                     tapes.get(tapeId).getContent().add(0, '_');
                     break;
