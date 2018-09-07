@@ -16,9 +16,6 @@ public class Execution implements Serializable {
         this.states = states;
         this.tapes = tapes;
         currentStateName = null;
-        /*for (State state : states) {
-            state.setNextStates(findNextStates(states, state));
-        }*/
     }
 
     //encontra os estados executaveis
@@ -55,25 +52,6 @@ public class Execution implements Serializable {
             }
         }
     }
-
-    /*private List<State> findNextStates(List<State> states, State state) {
-        List<State> nextStates = new ArrayList<>();
-        for (State nextState : states) {
-            if (nextState.getName().equals(state.getNextState())) {
-                nextStates.add(nextState);
-            }
-        }
-        return nextStates;
-    }*/
-
-    /*public List<State> possibleStates() {
-        List<State> possibleStates = new ArrayList<>();
-        for (State state : states) {
-            if (state.getName().equals(currentStateName) && state.isExecutable(tapes))
-                possibleStates.add(state);
-        }
-        return possibleStates;
-    }*/
 
     public List<Tape> getTapes() {
         return tapes;
@@ -119,11 +97,6 @@ public class Execution implements Serializable {
             modifyContent(i, state);
             move(i, state);
         }
-        // searches for next state
-        /*List<State> executableNextStates = state.getExecutableNextStates(tapes);
-        if (executableNextStates.size() != 0 && executableNextStates.get(0) != null) {
-            state = executableNextStates.get(0);
-        }*/
         currentStateName = state.getNextState();
     }
 

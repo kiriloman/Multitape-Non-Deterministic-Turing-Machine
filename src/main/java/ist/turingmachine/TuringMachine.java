@@ -40,7 +40,8 @@ public class TuringMachine implements Runnable {
     }
 
     private void outputTapes() {
-        gui.paneTapesOutput.setText(gui.paneInput.getText()); // newline?
+        if (!gui.paneInput.getText().equals("Initial tapes here, one in each line"))
+            gui.paneTapesOutput.setText(gui.paneInput.getText()); // newline?
     }
 
     private void resetGUI() {
@@ -53,7 +54,7 @@ public class TuringMachine implements Runnable {
         gui.paneLog.setCaretPosition(gui.paneLog.getDocument().getLength());
         gui.choose_steps.setEnabled(true);
     }
-    
+
     private void adjustNumOfTapes() {
         if (states.get(0).getRead().length() > tapes.size()) {
             int extraTapes = states.get(0).getRead().length() - tapes.size();
@@ -88,7 +89,7 @@ public class TuringMachine implements Runnable {
             gui.paneTapesOutput.setText(gui.paneTapesOutput.getText() + "\n" + "You forgot the program.");
         }
 
-        // Isto aqui remove a ultima newline
+        // Isto aqui remove a ultima newline provavelmente inutil
 
         if (!gui.paneTapesOutput.getText().equals("")) {
             try {
@@ -103,7 +104,10 @@ public class TuringMachine implements Runnable {
         //review this code
         if (check_coherence()) {
             System.out.println("checked");
-            if (!gui.NonDeterministicField.getText().equals("") && !gui.NonDeterministicField.getText().equals("Decision Sequence")) {
+
+            //Parece que nunca é usado. Rever com Prof
+
+            /*if (!gui.NonDeterministicField.getText().equals("") && !gui.NonDeterministicField.getText().equals("Decision Sequence")) {
                 decisionEnabled = true;
                 decisionString = gui.NonDeterministicField.getText();
             } else {
@@ -111,7 +115,7 @@ public class TuringMachine implements Runnable {
                 decisionEnabled = false;
             }
             gui.NonDeterministicField.setHorizontalAlignment(SwingConstants.LEFT);
-            gui.NonDeterministicField.setOpaque(true);
+            gui.NonDeterministicField.setOpaque(true);*/
 
 
             Execution execution = new Execution(tapes, states);
@@ -120,10 +124,9 @@ public class TuringMachine implements Runnable {
                 System.out.println(states.toString() + " " + tapes.toString());
                 BFS(execution);
             } catch (InterruptedException | BadLocationException e1) {
-                System.out.println("Execution went wrong. Line 110.");
+                System.out.println("Execution went wrong.");
             }
         }
-
         resetGUI();
     }
 
@@ -135,22 +138,22 @@ public class TuringMachine implements Runnable {
         int k = 0, l = 0;
         gui.paused = true;
         List<State> statesToUse;
-        //ArrayList<String> marked_states = new ArrayList<>();
+
         Queue<String> queue = new LinkedList<>();
-        ArrayList<Execution> execution_clones = new ArrayList<>();
+        ArrayList<Execution> executionClones = new ArrayList<>();
         int clone_number;
-        //marked_states.add("0");
         queue.add("0");
-        execution_clones.add(execution);
+        executionClones.add(execution);
         chill();
         while (queue.size() != 0) {
-            if (execution_clones.get(0).findExecutableStates().size() > 0) {
+            if (executionClones.get(0).findExecutableStates().size() > 0) {
                 if (k == 1) {
                     k = 0;
                     no_chill = true;
                 } else {
                     no_chill = false;
-                    draw(execution_clones.get(0));
+                    draw(executionClones.get(0));
+                    //What does this do?
                     if (queue.peek().substring(1).length() > decisionString.length() || (queue.peek().substring(1).length() <= decisionString.length() && !queue.peek().substring(1).equals(decisionString) && !decisionEnabled)) {
                         gui.NonDeterministicField.setText(queue.peek().substring(1));
                     } else
@@ -161,7 +164,7 @@ public class TuringMachine implements Runnable {
                 no_chill = true;
             }
             //no inicio é 1. a propria execution
-            clone_number = execution_clones.size();
+            clone_number = executionClones.size();
 
             if (decisionEnabled) {
                 if (decisionNumber > decisionString.length() - 1) {
@@ -170,62 +173,65 @@ public class TuringMachine implements Runnable {
                     gui.NonDeterministicField.setFocusable(true);
                     gui.step.setEnabled(true);
                     if (lastState.equals("halt-accept") || lastState.equals("halt-reject") || lastState.equals("halt")) {
-                        halt(execution_clones.get(execution_clones.size() - 1), lastState);
+                        halt(executionClones.get(executionClones.size() - 1), lastState);
                         return;
                     }
-                    highlight_decision(decisionNumber - 1);
+                    highlightDecision(decisionNumber - 1);
                     chill();
                     if (gui.NonDeterministicField.getText().length() > decisionString.length()) {
                         decisionString = gui.NonDeterministicField.getText();
-                        if (Character.getNumericValue(decisionString.charAt(decisionNumber)) <= execution_clones.get(0).findExecutableStates().size()) {
+                        if (Character.getNumericValue(decisionString.charAt(decisionNumber)) <= executionClones.get(0).findExecutableStates().size()) {
                             statesToUse = new ArrayList<>();
-                            statesToUse.add(execution_clones.get(0).findExecutableStates().get(Character.getNumericValue(decisionString.charAt(decisionNumber)) - 1));
+                            statesToUse.add(executionClones.get(0).findExecutableStates().get(Character.getNumericValue(decisionString.charAt(decisionNumber)) - 1));
                             decisionNumber++;
                         } else {
-                            halt(execution_clones.get(execution_clones.size() - 1), lastState);
-                            highlight_decision(decisionNumber);
+                            halt(executionClones.get(executionClones.size() - 1), lastState);
+                            highlightDecision(decisionNumber);
                             return;
                         }
                     } else {
                         decisionEnabled = false;
-                        statesToUse = execution_clones.get(0).findExecutableStates();
+                        statesToUse = executionClones.get(0).findExecutableStates();
                     }
                 } else {
-                    highlight_decision(decisionNumber - 1);
+                    highlightDecision(decisionNumber - 1);
                     if (lastState.equals("halt-accept") || lastState.equals("halt-reject") || lastState.equals("halt")) {
-                        halt(execution_clones.get(execution_clones.size() - 1), lastState);
+                        halt(executionClones.get(executionClones.size() - 1), lastState);
                         return;
                     }
-                    if (Character.getNumericValue(decisionString.charAt(decisionNumber)) <= execution_clones.get(0).findExecutableStates().size()) {
+                    if (Character.getNumericValue(decisionString.charAt(decisionNumber)) <= executionClones.get(0).findExecutableStates().size()) {
                         statesToUse = new ArrayList<>();
-                        statesToUse.add(execution_clones.get(0).findExecutableStates().get(Character.getNumericValue(decisionString.charAt(decisionNumber)) - 1));
+                        statesToUse.add(executionClones.get(0).findExecutableStates().get(Character.getNumericValue(decisionString.charAt(decisionNumber)) - 1));
                         decisionNumber++;
                     } else {
-                        halt(execution_clones.get(0), null);
+                        halt(executionClones.get(0), null);
                         return;
                     }
                 }
             } else {
-                highlight_decision(decisionNumber - 1);
-                statesToUse = execution_clones.get(0).findExecutableStates();
+                highlightDecision(decisionNumber - 1);
+
+                //Conjunto de estados que podem ser executados. List<State>
+                statesToUse = executionClones.get(0).findExecutableStates();
             }
 
-            if (gui.step_used && (execution_clones.size() != 1 || no_chill)) {
+            if (gui.step_used && (executionClones.size() != 1 || no_chill)) {
                 gui.paused = !gui.paused;
             }
 
             State statePicked;
+
             System.out.println(statesToUse.toString() + " states to use");
 
             for (int i = 0; i < statesToUse.size(); i++) {
-                System.out.println("State number " + i);
+
                 if (gui.choose_steps.isSelected()) {
                     //create_dialog(statesToUse);
                     statePicked = create_dialog(statesToUse);
                     //if (state_picked != -1) {
                     if (statePicked != null) {
                         //l = statesToUse.indexOf(state_picked);
-                        l = execution_clones.get(0).getStates().indexOf(statePicked);
+                        l = executionClones.get(0).getStates().indexOf(statePicked);
                         statesToUse = new ArrayList<>();
                         //statesToUse.add(state_picked);
                         statesToUse.add(statePicked);
@@ -237,7 +243,7 @@ public class TuringMachine implements Runnable {
 
 
                 if (lastState != null && (lastState.equals("halt") || lastState.equals("halt-accept"))) {
-                    halt(execution_clones.get(execution_clones.size() - 1), lastState);
+                    halt(executionClones.get(executionClones.size() - 1), lastState);
                     return;
                 }
                 if (statesToUse.size() <= 1 || i != 0) {
@@ -251,13 +257,13 @@ public class TuringMachine implements Runnable {
                         gui.NonDeterministicField.setText(queue.peek().substring(1));
                     } else
                         gui.NonDeterministicField.setText(decisionString);
-                    highlight_decision(decisionNumber - 1);
+                    highlightDecision(decisionNumber - 1);
                     if (gui.step_used)
                         gui.paused = !gui.paused;
-                    draw(execution_clones.get(0));
+                    draw(executionClones.get(0));
                     chill();
                 }
-                execution_clones.add((Execution) deepClone(execution_clones.get(0)));
+                executionClones.add((Execution) deepClone(executionClones.get(0)));
 
                 if (decisionEnabled) {
                     stateToQueue = queue.peek() + String.valueOf(decisionString.charAt(decisionNumber - 1));
@@ -268,41 +274,22 @@ public class TuringMachine implements Runnable {
                         stateToQueue = queue.peek() + (i + 1);
                 }
 
-
-                /*if (!marked_states.contains(stateToQueue)) {
-                    //change log
-                    gui.paneLog.setText(gui.paneLog.getText() + execution_clones.get(i + clone_number).getCurrentStateName() + "\n");
-                    execution_clones.get(i + clone_number).execute(statesToUse.get(i));
-                    //execution_clones.get(i + clone_number).setState(statesToUse.get(i));
-                    numOfSteps++;
-                    draw(execution_clones.get(i + clone_number));
-                    marked_states.add(stateToQueue);
-                    queue.add(stateToQueue);
-
-                    if (stateToQueue.substring(1).length() > decisionString.length() || (stateToQueue.substring(1).length() <= decisionString.length() && !stateToQueue.substring(1).equals(decisionString) && !stateToQueue.equals("0") && !decisionEnabled)) {
-                        gui.NonDeterministicField.setText(stateToQueue.substring(1));
-                    } else
-                        gui.NonDeterministicField.setText(decisionString);
-                    highlight_decision(decisionNumber - 1);
-                    if (gui.step_used)
-                        gui.paused = !gui.paused;
-                } else {*/
                 queue.offer(stateToQueue);
                     if (queue.contains(stateToQueue)) {
-                        gui.paneLog.setText(gui.paneLog.getText() + execution_clones.get(i + clone_number).getCurrentStateName() + "\n");
-                        execution_clones.get(i + clone_number).execute(statesToUse.get(i));
-                        //execution_clones.get(i + clone_number).setState(statesToUse.get(i));
+                        gui.paneLog.setText(gui.paneLog.getText() + executionClones.get(i + clone_number).getCurrentStateName() + "\n");
+                        executionClones.get(i + clone_number).execute(statesToUse.get(i));
+                        //executionClones.get(i + clone_number).setState(statesToUse.get(i));
                         numOfSteps++;
-                        draw(execution_clones.get(i + clone_number));
+                        draw(executionClones.get(i + clone_number));
                         if (stateToQueue.substring(1).length() > decisionString.length() || (stateToQueue.substring(1).length() <= decisionString.length() && !stateToQueue.substring(1).equals(decisionString) && !stateToQueue.substring(1).equals("0") && !decisionEnabled)) {
                             gui.NonDeterministicField.setText(stateToQueue.substring(1));
                         } else
                             gui.NonDeterministicField.setText(decisionString);
-                        highlight_decision(decisionNumber - 1);
+                        highlightDecision(decisionNumber - 1);
                         if (gui.step_used)
                             gui.paused = !gui.paused;
                     }
-                //}
+
                 lastState = statesToUse.get(i).getNextState().toLowerCase();
             }
 
@@ -312,19 +299,19 @@ public class TuringMachine implements Runnable {
                 lastState = lastState;
             else {
                 if (lastState.equals("halt") || lastState.equals("halt-accept")) {
-                    halt(execution_clones.get(execution_clones.size() - 1), lastState);
+                    halt(executionClones.get(executionClones.size() - 1), lastState);
                     return;
                 }
                 if (lastState.equals("halt-reject") && queue.size() == 2) {
-                    halt(execution_clones.get(execution_clones.size() - 1), lastState);
+                    halt(executionClones.get(executionClones.size() - 1), lastState);
                     return;
                 }
             }
             if (queue.size() != 1) {
                 queue.remove();
-                execution_clones.remove(0);
+                executionClones.remove(0);
             } else {
-                halt(execution_clones.get(execution_clones.size() - 1), lastState);
+                halt(executionClones.get(executionClones.size() - 1), lastState);
                 queue.remove();
             }
             if (!no_chill || k == 0) {
@@ -347,18 +334,14 @@ public class TuringMachine implements Runnable {
             int action = JOptionPane.showOptionDialog(gui.panelInput, "Pick a state.", "State picker", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (action != -1)
                 pickedState = statesToUse.get(action);
-                //state_picked = statesToUse.get(action);
             else {
-                //state_picked = -1;
                 gui.choose_steps.setSelected(false);
             }
         }
-        //else
-        //state_picked = -1;
         return pickedState;
     }
 
-    private void highlight_decision(int char_num) throws BadLocationException {
+    private void highlightDecision(int char_num) throws BadLocationException {
         if (char_num >= 0) {
             gui.highlighter_decisions.removeAllHighlights();
             gui.highlighter_decisions.addHighlight(char_num, char_num + 1, gui.painter);
