@@ -5,7 +5,7 @@ An ```accept state``` seeking multitape non deterministic Turing machine simulat
 To obtain a copy of the simulator just download Turing Machine.jar
 
 ### Prerequisites
-* [Java 8] (http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
+* [Java 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
 
 ### Usage
 To open the simulator:
