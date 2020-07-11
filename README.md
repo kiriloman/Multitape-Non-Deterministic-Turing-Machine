@@ -37,22 +37,21 @@ When opened the simulator shows a GUI where you will be working.
 1. Transitions: the highlighted symbol indicates the head of a tape;
 2. Program;
 3. Controls:
-
- 1. **Steps**: how many transitions have been executed until current moment;
- 2. **Run**: executes the program;
- 3. **Run at full speed**: runs as fast as your computer allows;
- 4. **Step**: executes one transition;
- 5. **Pause/Resume**: pauses/resumes the execution;
- 6. **Set**: initiates the tapes and machine.
+    - **Steps**: how many transitions have been executed until current moment;
+    - **Run**: executes the program;
+    - **Run at full speed**: runs as fast as your computer allows;
+    - **Step**: executes one transition;
+    - **Pause/Resume**: pauses/resumes the execution;
+    - **Set**: initiates the tapes and machine.
 
 4. Tapes: put one in each line;
 5. Pre-execution controls:
 
- 1. **Decision Sequence**: shows the decisions made my machine until current moment; is used in non-deterministic cases. Will automatically fill itself when a transition is executed. Explanation on how to use it is in ***A Closer Look At Decision Sequence***;
- 2. **Clear**: clears **Decision Sequence**;
- 3. **Pick every step**: in non deterministic cases the machine will offer you to pick any possible transition you like;
- 4. **Open**: opens a program from your computer;
- 5. **Save**: saves the program written in **Program** area to your computer.
+   - **Decision Sequence**: shows the decisions made my machine until current moment; is used in non-deterministic cases. Will automatically fill itself when a transition is executed. Explanation on how to use it is in [A Closer Look At Decision Sequence](#a-closer-look-at-decision-sequence);
+   - **Clear**: clears **Decision Sequence**;
+   - **Pick every step**: in non deterministic cases the machine will offer you to pick any possible transition you like;
+   - **Open**: opens a program from your computer;
+   - **Save**: saves the program written in **Program** area to your computer.
  
 6. Syntax: syntax to follow on creation of a program;
 7. Log: illustrates all executed transitions until current moment.
