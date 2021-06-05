@@ -15,7 +15,7 @@ public class TM_Gui {
     public static JPanel panelMain = new JPanel(), panelCode = new JPanel(), panelInput = new JPanel(), panelTapes = new JPanel(new BorderLayout()), controlPanel = new JPanel(), panelMother = new JPanel(), panelSaveOpen = new JPanel(), panelNonDeterministic = new JPanel(), panelSyntax = new JPanel(), panelProgram = new JPanel(), panelCodeInput = new JPanel();
     public static JScrollPane scrollPane, inputScrollPane, frameScroll, logScroll, outputScroll;
     public static JTextArea paneCode, paneInput, paneSyntax, paneLog;
-    public static JButton decisionButton = new JButton(">"), clear = new JButton("Clear"), run = new JButton("Run"), pause = new JButton("Pause"), step = new JButton("Step"), reset = new JButton("Set"), open = new JButton("Open"), save = new JButton("Save");
+    public static JButton decisionButton = new JButton(">"), clear = new JButton("Clear"), run = new JButton("Run"), pause = new JButton("Pause"), step = new JButton("Step"), reset = new JButton("Set"), open = new JButton("Open"), save = new JButton("Save"), copyOutput = new JButton("Copy output");
     public static JCheckBox run_faster = new JCheckBox("Run at full speed"), choose_steps = new JCheckBox("I decide");
     public static JSplitPane splitter, splitCode;
     public static JLabel counterField = new JLabel("0", SwingConstants.CENTER), counterLabelField = new JLabel("Steps", SwingConstants.CENTER);
@@ -150,6 +150,7 @@ public class TM_Gui {
         controlPanel.add(step, BorderLayout.CENTER);
         controlPanel.add(pause, BorderLayout.CENTER);
         controlPanel.add(reset, BorderLayout.CENTER);
+        controlPanel.add(copyOutput, BorderLayout.CENTER);
         controlPanel.add(Box.createRigidArea(new Dimension(0, 50)));
 
 
@@ -504,6 +505,12 @@ public class TM_Gui {
             t = new Thread(new TM_Run());
             t.start();
         });
+
+        copyOutput.addActionListener(e -> {
+            paneTapesOutput.selectAll();
+            paneTapesOutput.copy();
+        });
+
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
