@@ -1,8 +1,8 @@
 # Multitape Non Deterministic Turing Machine Simulator
-An ```accept state``` seeking multitape non deterministic Turing machine simulator allows you to write and execute any Turing machine program with respect to **Syntax** and with no constraints on the amount of tapes used. In non deterministic cases it uses [Breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search) to find a path to a halting state, preferably a halt-accept state.
+An ```accept state``` seeking multitape non deterministic Turing machine simulator allows you to write and execute any Turing machine program with respect to [Syntax](#syntax) and with no constraints on the amount of tapes used. In non deterministic cases it uses [Breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search) to find a path to a halting state, preferably a halt-accept state.
 
 ## Getting Started
-To obtain a copy of the simulator just download Turing Machine.jar
+To obtain a copy of the simulator just download the `.jar` file or compile the project yourself.
 
 ### Prerequisites
 * [Java 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
@@ -14,7 +14,7 @@ To open the simulator:
 java -jar "path to .jar"
 ```
 
-### Syntax
+###Syntax
 Syntax inspired by [Anthony Morphett](http://morphett.info/turing/turing.html).
 
 Any program must follow the structure:
@@ -30,7 +30,7 @@ Use ```_``` to represent spaces, and ```*``` instead of a character read to mean
 This simulator needs a program and a certain amount of tapes. The number of tapes depends on the program. 
 When opened the simulator shows a GUI where you will be working.
 
-![Alt text](Images/turingmachine.png?raw=true)
+![Alt text](Images/turingmachine2021.png?raw=true)
 
 ### Meanings
 
@@ -42,7 +42,8 @@ When opened the simulator shows a GUI where you will be working.
     - **Run at full speed**: runs as fast as your computer allows;
     - **Step**: executes one transition;
     - **Pause/Resume**: pauses/resumes the execution;
-    - **Set**: initiates the tapes and machine.
+    - **Set**: initiates the tapes and machine;
+    - **Copy output**: copies the text of the output in the Tapes section.
 
 4. Tapes: put one in each line;
 5. Pre-execution controls:
@@ -58,8 +59,8 @@ When opened the simulator shows a GUI where you will be working.
 
 ### Running The Simulator
 
-1. Load one of the program on your computer, or write your own in the **Program** area.
-2. Enter your tapes in **Tapes** area. They will be written in **Transitions** area and the heads will be highlighted. Enter the sequence in the **Decision Sequence** field if needed. Click **Set** to initialise the machine.
+1. Load one of the programs on your computer or write your own in the **Program** area.
+2. Enter your tapes in the area under the Controls. They will be written in the **Tapes** area and the heads will be highlighted. Enter the sequence in the **Decision Sequence** field if needed. Click **Set** to initialise the machine.
 3. Click on **Run** to start the Turing machine and run it until it halts (if ever). Click on **Pause/Resume** to interrupt the Turing machine while it is running. Alternatively, click **Step** to run a single step of the Turing machine.
 4. Click **Set** to restore the Turing machine to its initial state so it can be run again.
 
