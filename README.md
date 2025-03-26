@@ -92,11 +92,13 @@ It is **not possible** to add values to the decision sequence in following cases
 For the sake of a simple example let's use a not well formed non deterministic program and a single tape ```011``` with its head on ```0```.
 Program:  
 
+```
 0 0 a r 0  
 0 0 b r 1  
 1 0 a r 1  
 1 1 a r 1  
-1 _ _ * halt  
+1 _ _ * halt
+```  
 
 Transition | Tape Content | Head | Decision Sequence
 ---------- | ------------ | ---- | -----------------
