@@ -14,7 +14,7 @@ To open the simulator:
 java -jar "path to .jar"
 ```
 
-###Syntax
+### Syntax
 Syntax inspired by [Anthony Morphett](http://morphett.info/turing/turing.html).
 
 Any program must follow the structure:
